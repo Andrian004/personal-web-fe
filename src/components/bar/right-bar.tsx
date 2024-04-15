@@ -16,10 +16,10 @@ type IconListType = {
 
 export function RightBar() {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-y-6 bg-white/60 backdrop-blur rounded-2xl p-4">
+    <div className="w-full flex flex-col items-center justify-center gap-y-6 bg-white/60  backdrop-blur-lg rounded-2xl p-4">
       <NavItem icon="Home" title="Home" to="/" />
       <NavItem icon="BriefcaseBusiness" title="Projects" to="/projects" />
-      <NavItem icon="Send" title="Contact" to="/contacts" />
+      <NavItem icon="Send" title="Contact" to="/contact" />
     </div>
   );
 }

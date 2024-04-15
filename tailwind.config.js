@@ -22,6 +22,11 @@ export default {
       fontFamily: {
         platypi: ["Platypi", "serif"],
       },
+      backgroundImage: {
+        sky: "url(./src/assets/sky1.jpg)",
+        skynight: "url(./src/assets/sky-night1.jpg)",
+        lightgradient: "url(./src/assets/light-gradient1.jpg)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

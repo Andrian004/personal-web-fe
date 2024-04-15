@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { GlobalError } from "@/components/error/global-error.tsx";
 import MainLayout from "@/layouts/main-layout";
 import MainPage from "@/pages/main-page/index.tsx";
-import AboutPage from "@/pages/about-page";
+import ProjectsPage from "@/pages/projects-page";
+import ContactPage from "@/pages/contact-page";
 
 export const router = createBrowserRouter([
   {
@@ -10,7 +11,16 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <MainPage />, errorElement: <GlobalError /> },
-      { path: "/about", element: <AboutPage />, errorElement: <GlobalError /> },
+      {
+        path: "projects",
+        element: <ProjectsPage />,
+        errorElement: <GlobalError />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+        errorElement: <GlobalError />,
+      },
     ],
     errorElement: <GlobalError />,
   },
