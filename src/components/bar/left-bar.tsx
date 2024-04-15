@@ -13,6 +13,13 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
+type ContactCardProps = {
+  logo: ReactNode;
+  title: string;
+  desc: string;
+  iconStyle?: string;
+};
+
 export function LeftBar() {
   return (
     <div className="w-full flex flex-col items-center gap-y-6 bg-white/60 backdrop-blur rounded-2xl p-4">
@@ -67,13 +74,6 @@ export function LeftBar() {
     </div>
   );
 }
-
-type ContactCardProps = {
-  logo: ReactNode;
-  title: string;
-  desc: string;
-  iconStyle?: string;
-};
 
 function ContactCard({ logo, title, desc, iconStyle }: ContactCardProps) {
   return (
