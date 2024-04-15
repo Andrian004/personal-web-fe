@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
-import { Home, Send, BriefcaseBusiness } from "lucide-react";
+import { Home, Send, BriefcaseBusiness, Cog } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NavItemProps = {
@@ -16,10 +16,11 @@ type IconListType = {
 
 export function RightBar() {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-y-6 bg-white/60  backdrop-blur-lg rounded-2xl p-4">
+    <div className="w-full flex flex-col items-center justify-center gap-y-6 bg-white/80  backdrop-blur-lg rounded-2xl p-4">
       <NavItem icon="Home" title="Home" to="/" />
       <NavItem icon="BriefcaseBusiness" title="Projects" to="/projects" />
       <NavItem icon="Send" title="Contact" to="/contact" />
+      <NavItem icon="Cog" title="Settings" to="/settings" />
     </div>
   );
 }
@@ -35,7 +36,7 @@ function NavItem({ icon, title, to }: NavItemProps) {
       node: (
         <Home
           className={cn(
-            "w-8 h-8 duration-300",
+            "w-8 h-8 duration-200",
             match || isHover ? "w-5 h-5" : ""
           )}
         />
@@ -46,7 +47,7 @@ function NavItem({ icon, title, to }: NavItemProps) {
       node: (
         <Send
           className={cn(
-            "w-8 h-8 duration-300",
+            "w-8 h-8 duration-200",
             match || isHover ? "w-5 h-5" : ""
           )}
         />
@@ -57,7 +58,18 @@ function NavItem({ icon, title, to }: NavItemProps) {
       node: (
         <BriefcaseBusiness
           className={cn(
-            "w-8 h-8 duration-300",
+            "w-8 h-8 duration-200",
+            match || isHover ? "w-5 h-5" : ""
+          )}
+        />
+      ),
+    },
+    {
+      name: "Cog",
+      node: (
+        <Cog
+          className={cn(
+            "w-8 h-8 duration-200",
             match || isHover ? "w-5 h-5" : ""
           )}
         />
@@ -69,8 +81,8 @@ function NavItem({ icon, title, to }: NavItemProps) {
     <NavLink
       to={to}
       className={cn(
-        "w-16 h-16 flex flex-col justify-center items-center gap-y-0 bg-white rounded-lg duration-300",
-        match || isHover ? "gap-y-1 bg-sky-400/40" : ""
+        "w-16 h-16 flex flex-col justify-center items-center gap-y-0 bg-white rounded-lg duration-500",
+        match || isHover ? "gap-y-1 bg-sky-400" : ""
       )}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -78,7 +90,7 @@ function NavItem({ icon, title, to }: NavItemProps) {
       {icons.find((e) => e.name === icon)?.node}
       <h1
         className={cn(
-          "font-medium text-xs h-0 opacity-0 duration-300",
+          "font-medium text-xs h-0 opacity-0 duration-500",
           match || isHover ? "h-auto opacity-100" : ""
         )}
       >

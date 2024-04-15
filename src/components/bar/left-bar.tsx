@@ -22,7 +22,7 @@ type ContactCardProps = {
 
 export function LeftBar() {
   return (
-    <div className="w-full flex flex-col items-center gap-y-6 bg-white/60 backdrop-blur-lg rounded-2xl p-4">
+    <div className="w-full flex flex-col items-center gap-y-6 bg-white/80 backdrop-blur-lg rounded-2xl p-4">
       <div className="text-center">
         <h1 className="text-2xl font-semibold">Bar-Bar Code</h1>
         <h2 className="text-md font-medium text-neutral-700">Web Developer</h2>
@@ -41,7 +41,7 @@ export function LeftBar() {
           <Youtube className="w-5 h-5 text-red-600" />
         </Button>
       </div>
-      <div className="w-full bg-neutral-300/30 space-y-2 p-2 rounded-xl">
+      <div className="w-full bg-neutral-400/30 space-y-2 p-2 rounded-xl">
         <ContactCard
           logo={<Phone className="w-5 h-5" />}
           title="Phone"
