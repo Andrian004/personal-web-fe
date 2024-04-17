@@ -24,7 +24,7 @@ export default {
       },
       backgroundImage: {
         sky: "url(./src/assets/sky1.jpg)",
-        skynight: "url(./src/assets/sky-night1.jpg)",
+        skynight: "url(./src/assets/sky-night3.jpg)",
         lightgradient: "url(./src/assets/light-gradient1.jpg)",
       },
       colors: {
