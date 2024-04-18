@@ -70,7 +70,7 @@ export function LeftBar() {
           iconStyle="text-sky-600"
         />
       </div>
-      <Button>Download CV</Button>
+      <Button className="bg-sky-700">Download CV</Button>
     </div>
   );
 }
