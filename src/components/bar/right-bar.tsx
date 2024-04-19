@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
-import { Home, Send, BriefcaseBusiness, Cog } from "lucide-react";
+import { Home, Send, BriefcaseBusiness, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NavItemProps = {
@@ -20,7 +20,7 @@ export function RightBar() {
       <NavItem icon="Home" title="Home" to="/" />
       <NavItem icon="BriefcaseBusiness" title="Projects" to="/projects" />
       <NavItem icon="Send" title="Contact" to="/contact" />
-      <NavItem icon="Cog" title="Settings" to="/settings" />
+      <NavItem icon="Sun" title="Themes" to="/themes" />
     </div>
   );
 }
@@ -65,9 +65,9 @@ function NavItem({ icon, title, to }: NavItemProps) {
       ),
     },
     {
-      name: "Cog",
+      name: "Sun",
       node: (
-        <Cog
+        <Sun
           className={cn(
             "w-8 h-8 duration-200",
             match || isHover ? "w-5 h-5" : ""
