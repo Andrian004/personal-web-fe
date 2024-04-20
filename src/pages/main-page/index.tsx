@@ -1,12 +1,13 @@
-import { CodeXml, Bed, Coffee, GraduationCap } from "lucide-react";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { TodoList } from "./_components/todo-list";
+import { CodeXml, Bed, Coffee, GraduationCap } from "lucide-react";
 
 export default function MainPage() {
   return (
     <div className="w-full bg-white/70 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex gap-x-4 border-b-2 border-sky-400 pb-3">
-        <h1 className="text-2xl font-medium">About Me</h1>
+      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+        <Header title="About Me" />
       </section>
       <section className="font-normal">
         <p>
@@ -26,7 +27,7 @@ export default function MainPage() {
       </section>
       <section className="space-y-2">
         <h2 className="text-lg font-medium">What I Do!</h2>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <TodoList
             rootClass="bg-gradient-to-br from-white to-rose-100"
             icon={<CodeXml className="w-10 h-10 text-sky-500" />}

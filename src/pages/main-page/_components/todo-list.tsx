@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type TodoListProps = {
+interface TodoListProps {
   rootClass?: string;
   icon: ReactNode;
   title: string;
   desc: string;
-};
+}
 
 export function TodoList({ rootClass, icon, title, desc }: TodoListProps) {
   return (

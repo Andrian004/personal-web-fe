@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-type FormInputProps = {
+interface FormInputProps {
   label: string;
   id: string;
   type?: string;
@@ -11,7 +11,7 @@ type FormInputProps = {
   labelStyle?: string;
   rootStyle?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export function FormInput({
   label,

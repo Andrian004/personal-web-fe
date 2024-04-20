@@ -3,20 +3,25 @@ import { NavLink, useMatch, useResolvedPath } from "react-router-dom";
 import { Home, Send, BriefcaseBusiness, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type NavItemProps = {
+interface NavItemProps {
   icon: string;
   title: string;
   to: string;
-};
+}
 
 type IconListType = {
   name: string;
   node: ReactNode;
 };
 
-export function RightBar() {
+export function RightBar({ rootStyle }: { rootStyle?: string }) {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-y-6 bg-white/70  backdrop-blur-lg rounded-2xl p-4">
+    <div
+      className={cn(
+        "w-full flex flex-col items-center justify-center gap-y-6 bg-white/70  backdrop-blur-lg rounded-2xl p-4",
+        rootStyle
+      )}
+    >
       <NavItem icon="Home" title="Home" to="/" />
       <NavItem icon="BriefcaseBusiness" title="Projects" to="/projects" />
       <NavItem icon="Send" title="Contact" to="/contact" />
@@ -81,7 +86,7 @@ function NavItem({ icon, title, to }: NavItemProps) {
     <NavLink
       to={to}
       className={cn(
-        "w-16 h-16 flex flex-col justify-center items-center gap-y-0 bg-white rounded-lg duration-500",
+        "w-16 h-16 flex flex-col justify-center items-center gap-y-0 bg-white ring-1 md:ring-0 rounded-lg duration-500",
         match || isHover ? "gap-y-1 bg-sky-400" : ""
       )}
       onMouseEnter={() => setIsHover(true)}

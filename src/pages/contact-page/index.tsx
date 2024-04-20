@@ -1,4 +1,5 @@
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { FormInput } from "./_components/form-input";
 import { FormTextarea } from "./_components/form-textarea";
 import { Button } from "@/components/ui/button";
@@ -6,8 +7,8 @@ import { Button } from "@/components/ui/button";
 export default function ContactPage() {
   return (
     <div className="w-full bg-white/70 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex gap-x-4 border-b-2 border-sky-400 pb-3">
-        <h1 className="text-2xl font-medium">Contact Me</h1>
+      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+        <Header title="Contact Me" />
       </section>
       <section className="bg-white p-2 md:p-5 xl:p-10 rounded-md space-y-10">
         <h1 className="text-xl lg:text-2xl text-neutral-700">

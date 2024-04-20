@@ -2,7 +2,7 @@ import { ChangeEventHandler } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-type FormTextareaProps = {
+interface FormTextareaProps {
   id: string;
   label: string;
   placeholder?: string;
@@ -10,7 +10,7 @@ type FormTextareaProps = {
   labelStyle?: string;
   textareaStyle?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement> | undefined;
-};
+}
 
 export function FormTextarea({
   id,

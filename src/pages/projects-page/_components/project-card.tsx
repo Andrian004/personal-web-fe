@@ -3,7 +3,7 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-type ProjectCardProps = {
+interface ProjectCardProps {
   rootClass?: string;
   image: string;
   link: string;
@@ -11,7 +11,7 @@ type ProjectCardProps = {
   title: string;
   likes: number;
   comments: number;
-};
+}
 
 export function ProjectCard({
   rootClass,

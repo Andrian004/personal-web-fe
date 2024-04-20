@@ -4,14 +4,15 @@ import { Footer } from "@/components/footer";
 import lightBg from "@/assets/sky1.jpg";
 import darkBg from "@/assets/sky-night3.jpg";
 import { cn } from "@/lib/utils";
+import { Header } from "@/components/header";
 
 export default function ThemesPage() {
   const [theme, setTheme] = useState("light");
 
   return (
     <div className="w-full bg-white/70 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex gap-x-4 border-b-2 border-sky-400 pb-3">
-        <h1 className="text-2xl font-medium">Themes</h1>
+      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+        <Header title="Themes" />
       </section>
       <section className="space-y-4">
         <div className="flex gap-x-4">
