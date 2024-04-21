@@ -35,7 +35,10 @@ export function FormTextarea({
       <Textarea
         id={id}
         placeholder={placeholder}
-        className={cn("text-lg bg-neutral-200", textareaStyle)}
+        className={cn(
+          "text-lg bg-neutral-200 dark:bg-neutral-900",
+          textareaStyle
+        )}
         onChange={onChange}
       />
     </div>

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   Github,
@@ -27,13 +27,15 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
   return (
     <div
       className={cn(
-        "w-full flex flex-col items-center gap-y-6 bg-white/70 backdrop-blur-lg rounded-2xl p-4",
+        "w-full flex flex-col items-center gap-y-6 bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4",
         rootStyle
       )}
     >
       <div className="text-center">
         <h1 className="text-2xl font-semibold">Bar-Bar Code</h1>
-        <h2 className="text-md font-medium text-neutral-700">Web Developer</h2>
+        <h2 className="text-md font-medium text-neutral-700 dark:text-neutral-300">
+          Web Developer
+        </h2>
       </div>
       <div className="flex justify-center gap-x-2">
         <Button variant="secondary" size="icon">
@@ -49,7 +51,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <Youtube className="w-5 h-5 text-red-600" />
         </Button>
       </div>
-      <div className="w-full divide-y divide-white bg-neutral-400/30 px-2 rounded-xl">
+      <div className="w-full divide-y divide-white bg-neutral-400/30 dark:bg-gray-950/30 px-2 rounded-xl">
         <div className="py-2">
           <ContactCard
             logo={<Phone className="w-5 h-5" />}
@@ -83,28 +85,47 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           />
         </div>
       </div>
-      <Button className="bg-sky-700">Download CV</Button>
+      <Button className="bg-sky-700 dark:bg-gray-900 dark:text-white">
+        Download CV
+      </Button>
     </div>
   );
 }
 
 function ContactCard({ logo, title, desc, iconStyle }: ContactCardProps) {
+  const [isHover, setIsHover] = useState(false);
   return (
     <Button
       variant="ghost"
-      className="relative flex w-full min-h-max justify-start hover:bg-transparent before:absolute before:w-0 before:h-full before:left-0 before:top-0 before:bg-white before:rounded-md before:hover:w-full before:duration-500 before:z-0 p-0 gap-x-2"
+      className="relative flex w-full min-h-max justify-start hover:bg-transparent before:absolute before:w-10 before:h-full before:left-0 before:top-0 before:bg-white dark:before:bg-gray-900 before:rounded-md before:hover:w-full before:duration-500 before:z-0 p-0 gap-x-2"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
       <span
         className={cn(
-          "h-10 w-10 bg-white text-secondary-foreground hover:bg-white/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium z-10",
+          "h-10 w-10 bg-white dark:bg-gradient-to-r dark:from-sky-950 dark:to-gray-900 text-secondary-foreground hover:bg-white/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium z-10",
           iconStyle
         )}
       >
         {logo}
       </span>
       <div className="text-start z-10">
-        <h1 className="text-xs font-normal text-neutral-700">{title}</h1>
-        <p className="text-sm font-medium text-neutral-800">{desc}</p>
+        <h1
+          className={cn(
+            "text-xs font-normal text-neutral-700 dark:text-neutral-200 duration-300",
+            isHover && "dark:text-sky-500"
+          )}
+        >
+          {title}
+        </h1>
+        <p
+          className={cn(
+            "text-sm font-medium text-neutral-800 dark:text-white duration-300",
+            isHover && "dark:text-sky-400"
+          )}
+        >
+          {desc}
+        </p>
       </div>
     </Button>
   );

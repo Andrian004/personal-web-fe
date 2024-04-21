@@ -25,7 +25,7 @@ export function ProjectCard({
   return (
     <div
       className={cn(
-        "bg-white p-3 rounded-lg hover:scale-105 duration-200 cursor-default shadow hover:shadow-md space-y-2",
+        "bg-white dark:bg-gray-800 p-3 rounded-lg hover:scale-105 duration-200 cursor-default shadow hover:shadow-md space-y-2",
         rootClass
       )}
     >
@@ -60,7 +60,7 @@ export function ProjectCard({
           <Link
             to={link}
             target="_blank"
-            className="text-sm text-neutral-600 hover:text-sky-500 hover:underline"
+            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-sky-500 hover:underline"
           >
             {linkPrev}
           </Link>

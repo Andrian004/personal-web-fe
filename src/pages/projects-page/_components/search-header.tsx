@@ -28,7 +28,7 @@ export function SearchHeader({ title }: SearchHeaderProps) {
       <div className="flex gap-x-2 sm:gap-x-3 md:gap-x-0">
         <form
           onSubmit={handleSearchChange}
-          className="hidden sm:flex items-center bg-white rounded-2xl h-8"
+          className="hidden sm:flex items-center bg-white dark:bg-gray-900 rounded-2xl h-8"
         >
           <input
             type="text"

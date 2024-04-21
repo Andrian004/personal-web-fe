@@ -1,16 +1,17 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Check } from "lucide-react";
-import { Footer } from "@/components/footer";
-import lightBg from "@/assets/sky1.jpg";
-import darkBg from "@/assets/sky-night3.jpg";
+import { useTheme } from "@/hooks/use-theme";
+import lightBg from "@/assets/sky1-small.jpg";
+import darkBg from "@/assets/sky-night3-small.jpg";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
 export default function ThemesPage() {
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className="w-full bg-white/70 backdrop-blur-lg rounded-2xl p-4 space-y-5">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
       <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
         <Header title="Themes" />
       </section>
@@ -25,17 +26,17 @@ export default function ThemesPage() {
             <h2 className="text-xl font-semibold">
               {theme === "light" ? "Light" : "Dark"}
             </h2>
-            <p className="text-sm font-light text-neutral-700">
+            <p className="text-sm font-light text-neutral-700 dark:text-neutral-300">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus,
               voluptatum.
             </p>
           </div>
         </div>
 
-        <div className="bg-white rounded-md">
+        <div className="bg-white dark:bg-gray-800 rounded-md">
           <div className="border-b border-neutral-300 p-2">
             <h2 className="text-lg font-medium">Current theme</h2>
-            <p className="text-sm font-light text-neutral-500">
+            <p className="text-sm font-light text-neutral-500 dark:text-neutral-400">
               Choose your favorite themes
             </p>
           </div>

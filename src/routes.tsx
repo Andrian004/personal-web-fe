@@ -10,6 +10,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <GlobalError />,
     children: [
       { path: "/", element: <MainPage />, errorElement: <GlobalError /> },
       {
@@ -28,6 +29,5 @@ export const router = createBrowserRouter([
         errorElement: <GlobalError />,
       },
     ],
-    errorElement: <GlobalError />,
   },
 ]);

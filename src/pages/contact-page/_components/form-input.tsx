@@ -37,7 +37,7 @@ export function FormInput({
       <Input
         id={id}
         type={type}
-        className={cn("text-lg bg-neutral-200", inputStyle)}
+        className={cn("text-lg bg-neutral-200 dark:bg-neutral-900", inputStyle)}
         placeholder={placeholder}
         onChange={onChange}
       />

@@ -6,7 +6,7 @@ import { SearchHeader } from "./_components/search-header";
 
 export default function ProjectsPage() {
   return (
-    <div className="w-full bg-white/70 backdrop-blur-lg rounded-2xl p-4 space-y-5">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
       <section className="w-full flex items-center justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
         <SearchHeader title="Projects" />
       </section>

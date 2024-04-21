@@ -11,8 +11,8 @@ export function ProfileDialog({ children, triggerStyle }: ProfileDialogProps) {
   return (
     <Dialog>
       <DialogTrigger className={triggerStyle}>{children}</DialogTrigger>
-      <DialogContent>
-        <LeftBar rootStyle="bg-transparent" />
+      <DialogContent className="dark:bg-gradient-to-br dark:from-sky-900 dark:to-gray-900">
+        <LeftBar rootStyle="bg-transparent dark:bg-transparent" />
       </DialogContent>
     </Dialog>
   );
