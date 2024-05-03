@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
 interface ProjectCardProps {
@@ -29,7 +30,11 @@ export function ProjectCard({
         rootClass
       )}
     >
-      <img src={image} alt="nugas" className="rounded-sm" />
+      <img
+        src={image}
+        alt="nugas"
+        className="h-[150px] rounded-sm border border-sky-200 dark:border-sky-950"
+      />
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">
           <Button
@@ -70,3 +75,20 @@ export function ProjectCard({
     </div>
   );
 }
+
+ProjectCard.Skeleton = function ProjectCardSkeleton() {
+  return (
+    <div className="w-full flex flex-col space-y-3 p-3 bg-gray-700/60 rounded-xl">
+      <Skeleton className="h-[150px] w-full rounded-md" />
+      <div className="w-full flex justify-end gap-x-2">
+        <Skeleton className="h-6 w-[30px]" />
+        <Skeleton className="h-6 w-[30px]" />
+        <Skeleton className="h-6 w-[30px]" />
+      </div>
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-6 w-[100px]" />
+      </div>
+    </div>
+  );
+};

@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/footer";
 import { ProjectCard } from "./_components/project-card";
-import lightGradient from "@/assets/light-gradient.jpg";
 import { SearchHeader } from "./_components/search-header";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/lib/fetcher";
 
 export default function ProjectsPage() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["project"],
+    queryFn: () => getApi("/project"),
+  });
+
   return (
     <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
       <section className="w-full flex items-center justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
@@ -22,38 +28,28 @@ export default function ProjectsPage() {
         </Button>
       </section>
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <ProjectCard
-          image={lightGradient}
-          title="Nugas Web App"
-          link="https://nugasteam.vercel.app/"
-          linkPrev="nugasteam.vercel.app"
-          likes={127}
-          comments={52}
-        />
-        <ProjectCard
-          image={lightGradient}
-          title="Skuynime"
-          link="https://skuynime-sigma.vercel.app/"
-          linkPrev="skuynime-sigma.vercel.app"
-          likes={56}
-          comments={28}
-        />
-        <ProjectCard
-          image={lightGradient}
-          title="Nasa Class"
-          link="https://ami-learning-club.netlify.app/"
-          linkPrev="ami-learning-club.netlify.app"
-          likes={9}
-          comments={0}
-        />
-        <ProjectCard
-          image={lightGradient}
-          title="Google Converter"
-          link="https://nugasteam.vercel.app/"
-          linkPrev="converter.google.com"
-          likes={17}
-          comments={1}
-        />
+        {isLoading ? (
+          <>
+            <ProjectCard.Skeleton />
+            <ProjectCard.Skeleton />
+            <ProjectCard.Skeleton />
+            <ProjectCard.Skeleton />
+          </>
+        ) : error || !data ? (
+          <h1>Error</h1>
+        ) : (
+          data.map((project) => (
+            <ProjectCard
+              key={project.id}
+              image={project.image.imgUrl}
+              title={project.title}
+              link={project.url}
+              linkPrev={project.url.split("//").slice(1)[0]}
+              likes={project.totalLikes}
+              comments={project.totalComments}
+            />
+          ))
+        )}
       </section>
       <Footer />
     </div>
