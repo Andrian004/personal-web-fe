@@ -5,6 +5,7 @@ import MainPage from "@/pages/main-page/index.tsx";
 import ProjectsPage from "@/pages/projects-page";
 import ContactPage from "@/pages/contact-page";
 import ThemesPage from "@/pages/themes-page";
+import ProfilePage from "./pages/profile-page";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,11 @@ export const router = createBrowserRouter([
       {
         path: "themes",
         element: <ThemesPage />,
+        errorElement: <GlobalError />,
+      },
+      {
+        path: "account",
+        element: <ProfilePage />,
         errorElement: <GlobalError />,
       },
     ],
