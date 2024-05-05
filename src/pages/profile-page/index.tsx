@@ -5,11 +5,14 @@ import { Footer } from "@/components/footer";
 import AngrySvg from "@/assets/angry.svg";
 import { Button } from "@/components/ui/button";
 import { SignupDialog } from "@/components/dialog/signup-dialog";
+import { LoginDialog } from "@/components/dialog/login-dialog";
 
 export default function ProfilePage() {
   const [signupState, setSignupState] = useState(false);
+  const [loginState, setLoginState] = useState(false);
 
   const closeSignupModal = () => setSignupState(false);
+  const closeLoginModal = () => setLoginState(false);
 
   return (
     <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
@@ -36,7 +39,7 @@ export default function ProfilePage() {
         </div>
         <img src={AngrySvg} alt="angry" className="w-52 h-52" />
         <div className="flex items-center gap-x-3">
-          <Button>LOGIN</Button>
+          <Button onClick={() => setLoginState(true)}>LOGIN</Button>
           <p>OR</p>
           <Button
             className="bg-sky-700 dark:bg-gray-900 dark:text-white"
@@ -48,6 +51,7 @@ export default function ProfilePage() {
       </section>
       {/* modal start */}
       <SignupDialog open={signupState} onClose={closeSignupModal} />
+      <LoginDialog open={loginState} onClose={closeLoginModal} />
       {/* modal end */}
       <Footer />
     </div>
