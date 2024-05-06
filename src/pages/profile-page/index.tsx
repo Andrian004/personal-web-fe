@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { UserRound } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import AngrySvg from "@/assets/angry.svg";
+import CoolSvg from "@/assets/cool.svg";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import AngrySvg from "@/assets/angry.svg";
 import { Button } from "@/components/ui/button";
 import { SignupDialog } from "@/components/dialog/signup-dialog";
 import { LoginDialog } from "@/components/dialog/login-dialog";
 
 export default function ProfilePage() {
+  const { user, removeToken } = useAuth();
   const [signupState, setSignupState] = useState(false);
   const [loginState, setLoginState] = useState(false);
 
@@ -32,21 +35,37 @@ export default function ProfilePage() {
       </section>
       <section className="w-full flex flex-col justify-center items-center space-y-4 pt-6">
         <div className="text-center">
-          <h1 className="text-4xl font-bold">Don't have account?</h1>
+          <h1 className="text-4xl font-bold">
+            {user ? "Cool, now you have an account." : "Don't have account?"}
+          </h1>
           <p className="text-neutral-700 dark:text-neutral-300">
-            Please ( login / sign up ) to get full access!
+            {user
+              ? "You got full access now."
+              : "Please ( login / sign up ) to get full access!"}
           </p>
         </div>
-        <img src={AngrySvg} alt="angry" className="w-52 h-52" />
+        <img
+          src={user ? CoolSvg : AngrySvg}
+          alt="angry"
+          className="w-52 h-52"
+        />
         <div className="flex items-center gap-x-3">
-          <Button onClick={() => setLoginState(true)}>LOGIN</Button>
-          <p>OR</p>
-          <Button
-            className="bg-sky-700 dark:bg-gray-900 dark:text-white"
-            onClick={() => setSignupState(true)}
-          >
-            SIGN UP
-          </Button>
+          {user ? (
+            <Button variant="destructive" onClick={() => removeToken()}>
+              LOG OUT
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => setLoginState(true)}>LOGIN</Button>
+              <p>OR</p>
+              <Button
+                className="bg-sky-700 dark:bg-gray-900 dark:text-white"
+                onClick={() => setSignupState(true)}
+              >
+                SIGN UP
+              </Button>
+            </>
+          )}
         </div>
       </section>
       {/* modal start */}

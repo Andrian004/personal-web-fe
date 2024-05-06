@@ -2,11 +2,15 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupSchema } from "@/schemas/signup-schema";
+import { LoaderCircle } from "lucide-react";
+import { postApi } from "@/lib/fetcher";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "../form/form-input";
 import { FormPassword } from "../form/form-password";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 
 interface SignupModalProps {
   open: boolean;
@@ -14,6 +18,7 @@ interface SignupModalProps {
 }
 
 export function SignupDialog({ open, onClose }: SignupModalProps) {
+  const { setToken } = useAuth();
   const signupForm = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -23,8 +28,20 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mutation: UseMutationResult<any> = useMutation({
+    mutationFn: (formData) => postApi("/auth/signup", formData),
+    onSuccess: (data) => {
+      setToken(data.token);
+      onClose();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   function onSubmit(values: z.infer<typeof signupSchema>) {
-    console.log(values);
+    mutation.mutate(values);
   }
 
   return (
@@ -58,8 +75,16 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
               label="Password"
               placeholder="Enter a password..."
             />
-            <Button type="submit" className="w-full">
-              Continue
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                "Continue"
+              )}
             </Button>
           </form>
         </Form>

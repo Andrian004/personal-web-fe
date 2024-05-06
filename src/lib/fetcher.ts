@@ -8,38 +8,34 @@ export const getApi = async (endpoint: string): Promise<Project[]> => {
 };
 
 // post
-export const postApi = async (endpoint: string, body: unknown) => {
-  const token = "";
-  try {
-    const response = await fetch(import.meta.env.VITE_API_URL + endpoint, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+export const postApi = async (
+  endpoint: string,
+  formData: unknown,
+  token?: string
+) => {
+  const headerOptions = {
+    Authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "application/json",
+  };
+
+  const data = await fetch(import.meta.env.VITE_API_URL + endpoint, {
+    method: "POST",
+    headers: headerOptions,
+    body: JSON.stringify(formData),
+  });
+  return data.json();
 };
 
 // delete
-export const deleteApi = async (endpoint: string) => {
-  const token = "";
-  try {
-    const response = await fetch(import.meta.env.VITE_API_URL + endpoint, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    return err;
-  }
+export const deleteApi = async (endpoint: string, token?: string) => {
+  const headerOptions = {
+    Authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "application/json",
+  };
+
+  const response = await fetch(import.meta.env.VITE_API_URL + endpoint, {
+    method: "DELETE",
+    headers: headerOptions,
+  });
+  return response.json();
 };
