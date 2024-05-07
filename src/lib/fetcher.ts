@@ -1,10 +1,13 @@
+import axios, { AxiosResponse } from "axios";
 import { Project } from "@/interfaces/project-interface";
+import { SuccessResponse } from "@/interfaces/api-interface";
 
 // get
-export const getApi = async (endpoint: string): Promise<Project[]> => {
-  const response = await fetch(import.meta.env.VITE_API_URL + endpoint);
-  const data = await response.json();
-  return data.body;
+export const getApi = async (endpoint: string) => {
+  const response: AxiosResponse<SuccessResponse<Project[]>> = await axios.get(
+    import.meta.env.VITE_API_URL + endpoint
+  );
+  return response.data;
 };
 
 // post
@@ -18,12 +21,12 @@ export const postApi = async (
     "Content-Type": "application/json",
   };
 
-  const data = await fetch(import.meta.env.VITE_API_URL + endpoint, {
-    method: "POST",
-    headers: headerOptions,
-    body: JSON.stringify(formData),
-  });
-  return data.json();
+  const response = await axios.post(
+    import.meta.env.VITE_API_URL + endpoint,
+    formData,
+    { headers: headerOptions }
+  );
+  return response.data;
 };
 
 // delete

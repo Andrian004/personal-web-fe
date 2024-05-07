@@ -38,7 +38,7 @@ export default function ProjectsPage() {
         ) : error || !data ? (
           <h1>Error</h1>
         ) : (
-          data.map((project) => (
+          data.body.map((project) => (
             <ProjectCard
               key={project.id}
               image={project.image.imgUrl}

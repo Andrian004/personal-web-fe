@@ -3,14 +3,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signupSchema } from "@/schemas/signup-schema";
 import { LoaderCircle } from "lucide-react";
-import { postApi } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/use-auth";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { postApi } from "@/lib/fetcher";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "../form/form-input";
 import { FormPassword } from "../form/form-password";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/interfaces/api-interface";
 
 interface SignupModalProps {
   open: boolean;
@@ -28,15 +32,17 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mutation: UseMutationResult<any> = useMutation({
-    mutationFn: (formData) => postApi("/auth/signup", formData),
+  const mutation = useMutation({
+    mutationFn: (formData: z.infer<typeof signupSchema>) =>
+      postApi("/auth/signup", formData),
     onSuccess: (data) => {
       setToken(data.token);
       onClose();
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      }
     },
   });
 
@@ -77,7 +83,7 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
             />
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-sky-600 dark:bg-sky-500"
               disabled={mutation.isPending}
             >
               {mutation.isPending ? (

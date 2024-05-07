@@ -39,7 +39,7 @@ export function FormPassword({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <div className="flex justify-center bg-gray-950 rounded-md">
+            <div className="flex justify-center bg-white dark:bg-gray-950 rounded-md">
               <Input
                 className="bg-transparent output-none border-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 placeholder={placeholder}

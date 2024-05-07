@@ -22,25 +22,32 @@ export default function ProfilePage() {
       <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
         <Header title="My Account" />
       </section>
-      <section className="flex gap-x-5 bg-gray-400/30 dark:bg-gray-800/70 rounded-lg p-3">
-        <div className="w-max h-max rounded-full outline outline-4 outline-sky-500 p-2">
-          <UserRound className="w-16 h-16" />
+      <section className="flex flex-wrap justify-between bg-gray-400/30 dark:bg-gray-800/70 shadow shadow-gray-400 dark:shadow-black rounded-lg p-3">
+        <div className="flex gap-x-4">
+          <div className="w-max h-max bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 shadow-inner shadow-gray-400 dark:shadow-black rounded-full p-2">
+            <UserRound className="w-16 h-16" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold">
+              {user ? user.username : "Guest"}
+            </h1>
+            <h2 className="text-neutral-700 dark:text-neutral-400">
+              {user ? user.role : "guest user"}
+            </h2>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold">Guest</h1>
-          <h2 className="text-neutral-700 dark:text-neutral-400">
-            example@example.com
-          </h2>
-        </div>
+        <Button variant="destructive" size="sm" disabled={user ? false : true}>
+          Delete account
+        </Button>
       </section>
       <section className="w-full flex flex-col justify-center items-center space-y-4 pt-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold">
-            {user ? "Cool, now you have an account." : "Don't have account?"}
+            {user ? "You got full access now." : "Don't have account?"}
           </h1>
           <p className="text-neutral-700 dark:text-neutral-300">
             {user
-              ? "You got full access now."
+              ? "Cool, you have been created an account."
               : "Please ( login / sign up ) to get full access!"}
           </p>
         </div>

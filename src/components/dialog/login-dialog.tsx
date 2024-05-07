@@ -1,12 +1,20 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { loginSchema } from "@/schemas/login-schema";
+import { LoaderCircle } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { postApi } from "@/lib/fetcher";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "../form/form-input";
 import { FormPassword } from "../form/form-password";
+
+import { loginSchema } from "@/schemas/login-schema";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/interfaces/api-interface";
 
 interface LoginDialogProps {
   open: boolean;
@@ -14,6 +22,8 @@ interface LoginDialogProps {
 }
 
 export function LoginDialog({ open, onClose }: LoginDialogProps) {
+  const { setToken } = useAuth();
+
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,8 +32,24 @@ export function LoginDialog({ open, onClose }: LoginDialogProps) {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: (formData: z.infer<typeof loginSchema>) =>
+      postApi("/auth/login", formData),
+    onSuccess: (data) => {
+      setToken(data.token);
+      onClose();
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if (error.response) {
+        toast.error(error.response.data.message, {
+          position: "top-center",
+        });
+      }
+    },
+  });
+
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
+    mutation.mutate(values);
   }
 
   return (
@@ -50,8 +76,16 @@ export function LoginDialog({ open, onClose }: LoginDialogProps) {
               label="Password"
               placeholder="Enter a password..."
             />
-            <Button type="submit" className="w-full">
-              Continue
+            <Button
+              type="submit"
+              className="w-full bg-sky-600 dark:bg-sky-500"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                "Continue"
+              )}
             </Button>
           </form>
         </Form>
