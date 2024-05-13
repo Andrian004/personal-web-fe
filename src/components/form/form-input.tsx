@@ -17,6 +17,9 @@ interface FormInputProps {
   description?: string;
   name: string;
   type?: string;
+  rootStyle?: string;
+  labelStyle?: string;
+  controlStyle?: string;
 }
 
 export function FormInput({
@@ -26,16 +29,24 @@ export function FormInput({
   description,
   name,
   type = "text",
+  rootStyle,
+  labelStyle,
+  controlStyle,
 }: FormInputProps) {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className={rootStyle}>
+          <FormLabel className={labelStyle}>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} type={type} {...field} />
+            <Input
+              placeholder={placeholder}
+              type={type}
+              className={controlStyle}
+              {...field}
+            />
           </FormControl>
           <FormDescription className="text-xs">{description}</FormDescription>
           <FormMessage className="text-xs" />
