@@ -37,7 +37,7 @@ export default function ThemesPage() {
           <div className="border-b border-neutral-300 p-2">
             <h2 className="text-lg font-medium">Current theme</h2>
             <p className="text-sm font-light text-neutral-500 dark:text-neutral-400">
-              Choose your favorite themes
+              Choose your favorite theme.
             </p>
           </div>
           <div className="flex gap-x-4 p-4">

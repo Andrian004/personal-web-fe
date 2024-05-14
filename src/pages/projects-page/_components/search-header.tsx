@@ -32,7 +32,7 @@ export function SearchHeader({ title }: SearchHeaderProps) {
         >
           <input
             type="text"
-            className="h-full bg-transparent focus:outline-none focus-visible:outline-0 pl-3 pr-0 py-2"
+            className="h-full bg-transparent focus:outline-none focus-visible:outline-0 pl-3 pr-0 py-2 caret-sky-500"
             placeholder="Search project..."
             onChange={(e) => setSearchValue(e.target.value)}
           />

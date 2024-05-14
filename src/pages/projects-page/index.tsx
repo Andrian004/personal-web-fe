@@ -17,13 +17,25 @@ export default function ProjectsPage() {
         <SearchHeader title="Projects" />
       </section>
       <section className="w-full flex flex-row-reverse flex-wrap-reverse items-center gap-x-2">
-        <Button variant="secondary" size="xs" className="text-xs">
+        <Button
+          variant="secondary"
+          size="xs"
+          className="text-xs text-neutral-500 dark:text-neutral-400"
+        >
           Tools
         </Button>
-        <Button variant="secondary" size="xs" className="text-xs">
+        <Button
+          variant="secondary"
+          size="xs"
+          className="text-xs text-neutral-500 dark:text-neutral-400"
+        >
           Popular
         </Button>
-        <Button variant="secondary" size="xs" className="text-xs">
+        <Button
+          variant="secondary"
+          size="xs"
+          className="text-xs border-2 border-sky-500"
+        >
           All
         </Button>
       </section>

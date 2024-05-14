@@ -3,6 +3,7 @@ import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface ProjectCardProps {
   rootClass?: string;
@@ -23,18 +24,27 @@ export function ProjectCard({
   likes,
   comments,
 }: ProjectCardProps) {
+  const [onHover, setOnHover] = useState(false);
+
   return (
     <div
       className={cn(
-        "bg-white dark:bg-gray-800 p-3 rounded-lg hover:scale-105 duration-200 cursor-default shadow hover:shadow-md space-y-2",
+        "bg-white dark:bg-gray-800 p-3 rounded-lg cursor-default shadow hover:bg-neutral-100/90 dark:hover:bg-gray-900/80 space-y-2 duration-300",
         rootClass
       )}
+      onMouseEnter={() => setOnHover(true)}
+      onMouseLeave={() => setOnHover(false)}
     >
-      <img
-        src={image}
-        alt="nugas"
-        className="h-[150px] rounded-sm border border-sky-200 dark:border-sky-950"
-      />
+      <div className="box-border overflow-hidden rounded-sm border border-sky-200 dark:border-sky-950">
+        <img
+          src={image}
+          alt="nugas"
+          className={cn(
+            "h-[150px] rounded-sm duration-200",
+            onHover && "scale-125"
+          )}
+        />
+      </div>
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">
           <Button
