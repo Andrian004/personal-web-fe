@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { deleteApi, postApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 interface ProjectCardProps {
+  projectId: string;
+  userId: string | undefined;
+  token: string | undefined;
   rootClass?: string;
   image: string;
   link: string;
@@ -13,18 +18,60 @@ interface ProjectCardProps {
   title: string;
   likes: number;
   comments: number;
+  liked: boolean;
 }
 
+type AdditionalLikeData = {
+  pid: string;
+  uid: string;
+};
+
 export function ProjectCard({
+  projectId,
+  userId = "",
+  token,
   rootClass,
   image,
   link,
   linkPrev,
   title,
-  likes,
+  likes = 0,
   comments,
+  liked,
 }: ProjectCardProps) {
+  const navigate = useNavigate();
   const [onHover, setOnHover] = useState(false);
+  const [totalLikes, setTotalLikes] = useState<number>(likes);
+  const [isLiked, setIsLiked] = useState<boolean>(liked);
+
+  const postMutation = useMutation({
+    mutationFn: (formData: AdditionalLikeData) =>
+      postApi("/like", formData, token),
+    onSuccess: () => {
+      setIsLiked(true);
+      setTotalLikes(totalLikes + 1);
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (formData: AdditionalLikeData) =>
+      deleteApi("/like", token, formData),
+    onSuccess: () => {
+      setIsLiked(false);
+      setTotalLikes(totalLikes - 1);
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const handleLike = () => {
+    if (!token) return navigate("/account");
+
+    if (!isLiked) {
+      return postMutation.mutate({ pid: projectId, uid: userId });
+    }
+    return deleteMutation.mutate({ pid: projectId, uid: userId });
+  };
 
   return (
     <div
@@ -40,7 +87,7 @@ export function ProjectCard({
           src={image}
           alt="nugas"
           className={cn(
-            "h-[150px] rounded-sm duration-200",
+            "w-full aspect-video rounded-sm duration-200",
             onHover && "scale-125"
           )}
         />
@@ -66,9 +113,15 @@ export function ProjectCard({
             variant="ghost"
             size="xs"
             className="bg-transparent hover:bg-transparent hover:text-sky-500"
+            onClick={handleLike}
+            disabled={postMutation.isPending || deleteMutation.isPending}
           >
-            <Heart className="w-5 h-5 mr-1" />
-            {likes}
+            {isLiked ? (
+              <Heart className="w-6 h-6 mr-1 fill-rose-500 text-transparent" />
+            ) : (
+              <Heart className="w-5 h-5 mr-1" />
+            )}
+            {totalLikes}
           </Button>
         </div>
         <div className="space-y-2">

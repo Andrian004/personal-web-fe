@@ -1,12 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-import { Project } from "@/interfaces/project-interface";
-import { SuccessResponse } from "@/interfaces/api-interface";
+import axios from "axios";
 
 // get
 export const getApi = async (endpoint: string) => {
-  const response: AxiosResponse<SuccessResponse<Project[]>> = await axios.get(
-    import.meta.env.VITE_API_URL + endpoint
-  );
+  const response = await axios.get(import.meta.env.VITE_API_URL + endpoint, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -30,15 +28,19 @@ export const postApi = async (
 };
 
 // delete
-export const deleteApi = async (endpoint: string, token?: string) => {
+export const deleteApi = async (
+  endpoint: string,
+  token?: string,
+  params?: unknown
+) => {
   const headerOptions = {
     Authorization: token ? `Bearer ${token}` : "",
     "Content-Type": "application/json",
   };
 
-  const response = await fetch(import.meta.env.VITE_API_URL + endpoint, {
-    method: "DELETE",
+  const response = await axios.delete(import.meta.env.VITE_API_URL + endpoint, {
     headers: headerOptions,
+    params: params,
   });
-  return response.json();
+  return response.data;
 };
