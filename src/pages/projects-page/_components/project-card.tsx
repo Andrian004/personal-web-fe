@@ -19,6 +19,7 @@ interface ProjectCardProps {
   likes: number;
   comments: number;
   liked: boolean;
+  desc: string;
 }
 
 type AdditionalLikeData = {
@@ -38,6 +39,7 @@ export function ProjectCard({
   likes = 0,
   comments,
   liked,
+  desc,
 }: ProjectCardProps) {
   const navigate = useNavigate();
   const [onHover, setOnHover] = useState(false);
@@ -125,6 +127,15 @@ export function ProjectCard({
           </Button>
         </div>
         <div className="space-y-2">
+          <div className="text-xs flex flex-wrap">
+            <p className="overflow-hidden text-nowrap">{desc}</p>
+            <Link
+              to={`/projects/${projectId}`}
+              className="text-sky-600 hover:underline"
+            >
+              ...more
+            </Link>
+          </div>
           <Link
             to={link}
             target="_blank"
@@ -149,6 +160,7 @@ ProjectCard.Skeleton = function ProjectCardSkeleton() {
         <Skeleton className="h-6 w-[30px]" />
       </div>
       <div className="space-y-2">
+        <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-[200px]" />
         <Skeleton className="h-6 w-[100px]" />
       </div>

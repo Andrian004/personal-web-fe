@@ -70,6 +70,7 @@ export default function ProjectsPage() {
               likes={project.totalLikes}
               comments={project.totalComments}
               liked={project.liked}
+              desc={project.description}
             />
           ))
         )}
