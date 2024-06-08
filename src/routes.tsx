@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         errorElement: <GlobalError />,
       },
       {
-        path: "projects/:id",
+        path: "project/:id",
         element: <DetailProjectPage />,
         errorElement: <GlobalError />,
       },

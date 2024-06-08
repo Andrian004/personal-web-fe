@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { signupSchema } from "@/schemas/signup-schema";
 import { LoaderCircle } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/hooks/use-auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { postApi } from "@/lib/fetcher";
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
@@ -14,6 +14,7 @@ import { FormInput } from "../form/form-input";
 import { FormPassword } from "../form/form-password";
 
 import { AxiosError } from "axios";
+import { signupSchema } from "@/schemas/signup-schema";
 import { ErrorResponse } from "@/interfaces/api-interface";
 
 interface SignupModalProps {
@@ -23,6 +24,7 @@ interface SignupModalProps {
 
 export function SignupDialog({ open, onClose }: SignupModalProps) {
   const { setToken } = useAuth();
+
   const signupForm = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -38,6 +40,7 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
     onSuccess: (data) => {
       setToken(data.token);
       onClose();
+      window.location.reload();
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       if (error.response) {

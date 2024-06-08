@@ -6,14 +6,15 @@ import { LoaderCircle } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { postApi } from "@/lib/fetcher";
 import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "../form/form-input";
 import { FormPassword } from "../form/form-password";
 
-import { loginSchema } from "@/schemas/login-schema";
 import { AxiosError } from "axios";
+import { loginSchema } from "@/schemas/login-schema";
 import { ErrorResponse } from "@/interfaces/api-interface";
 
 interface LoginDialogProps {
@@ -38,6 +39,7 @@ export function LoginDialog({ open, onClose }: LoginDialogProps) {
     onSuccess: (data) => {
       setToken(data.token);
       onClose();
+      window.location.reload();
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       if (error.response) {

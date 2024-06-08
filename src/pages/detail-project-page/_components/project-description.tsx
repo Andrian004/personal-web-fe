@@ -2,7 +2,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function ProjectDescription() {
+interface ProjectDescriptionProps {
+  desc: string;
+  github: string;
+  url: string;
+}
+
+export function ProjectDescription({
+  desc,
+  github,
+  url,
+}: ProjectDescriptionProps) {
   const [expand, setExpand] = useState(false);
   return (
     <div className="h-full bg-gray-200 dark:bg-gray-700/70 p-2 space-y-2 rounded-sm">
@@ -12,21 +22,28 @@ export function ProjectDescription() {
           expand && "line-clamp-none mb-3"
         )}
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda,
-        tempore ipsum ullam natus quasi provident maxime. Numquam libero aperiam
-        excepturi expedita rerum repellat. Odio laudantium autem deleniti
-        tempore reprehenderit dolorem fuga sed, rerum nisi necessitatibus iure
-        cumque ullam error molestias quasi id, hic architecto laboriosam.
-        Asperiores nulla commodi esse. Laboriosam?
+        {desc}
       </p>
       <ul className={expand ? "inline" : "hidden"}>
         <li>
           Demo link:{" "}
-          <span className="text-sky-600">https://examplelink.com</span>
+          <a
+            href={url}
+            target="_blank"
+            className="text-sky-600 hover:underline"
+          >
+            {url}
+          </a>
         </li>
         <li>
           Github:{" "}
-          <span className="text-sky-600">https://github.com/Andrian004</span>
+          <a
+            href={github}
+            target="_blank"
+            className="text-sky-600 hover:underline"
+          >
+            {github}
+          </a>
         </li>
       </ul>
       <Button

@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
+import { AdditionalLikeData } from "@/types";
+
 interface ProjectCardProps {
   projectId: string;
   userId: string | undefined;
@@ -21,11 +23,6 @@ interface ProjectCardProps {
   liked: boolean;
   desc: string;
 }
-
-type AdditionalLikeData = {
-  pid: string;
-  uid: string;
-};
 
 export function ProjectCard({
   projectId,
@@ -107,6 +104,7 @@ export function ProjectCard({
             variant="ghost"
             size="xs"
             className="bg-transparent hover:bg-transparent hover:text-sky-500"
+            onClick={() => navigate(`/project/${projectId}`)}
           >
             <MessageCircle className="w-5 h-5 mr-1" />
             {comments}
@@ -130,7 +128,7 @@ export function ProjectCard({
           <div className="text-xs flex flex-wrap">
             <p className="overflow-hidden text-nowrap">{desc}</p>
             <Link
-              to={`/projects/${projectId}`}
+              to={`/project/${projectId}`}
               className="text-sky-600 hover:underline"
             >
               ...more

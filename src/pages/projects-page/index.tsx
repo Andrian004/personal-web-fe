@@ -14,7 +14,7 @@ export default function ProjectsPage() {
 
   const { data, isLoading, error }: UseQueryResult<SuccessResponse<Project[]>> =
     useQuery({
-      queryKey: ["project"],
+      queryKey: ["projects"],
       queryFn: () => getApi("/project"),
     });
 
