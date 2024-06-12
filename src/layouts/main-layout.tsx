@@ -1,9 +1,12 @@
+import { useAuth } from "@/hooks/use-auth";
 import { NavLink, Outlet } from "react-router-dom";
 import { UserRound } from "lucide-react";
 import { LeftBar } from "@/components/bar/left-bar";
 import { RightBar } from "@/components/bar/right-bar";
+import { CustomAvatar } from "@/components/custom-avatar";
 
 export default function MainLayout() {
+  const { user } = useAuth();
   return (
     <div className="w-full min-h-screen bg-sky dark:bg-skynight bg-no-repeat bg-center bg-cover flex justify-center font-platypi">
       <div className="flex justify-between gap-4 w-full max-w-6xl bg-transparent mt-5 sm:mt-10 md:mt-16 mb-10 px-1 sm:px-4">
@@ -22,7 +25,16 @@ export default function MainLayout() {
                 : "w-20 h-20 bg-white dark:bg-gray-700 flex justify-center items-center rounded-full"
             }
           >
-            <UserRound className="w-12 h-12" />
+            {user ? (
+              <CustomAvatar
+                src=""
+                fallback={user.username.charAt(0)}
+                className="size-full"
+                fallbackStyle="bg-transparent text-4xl font-bold"
+              />
+            ) : (
+              <UserRound className="size-12" />
+            )}
           </NavLink>
           <RightBar />
         </section>

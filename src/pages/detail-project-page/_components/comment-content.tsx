@@ -6,19 +6,19 @@ interface CommentContentProps {
   username: string;
   message: string;
   totalLikes: number;
+  showReplyForm?: () => void;
 }
 
 export function CommentContent({
   username,
   message,
   totalLikes,
+  showReplyForm,
 }: CommentContentProps) {
   return (
     <>
-      <h3 className="text-md font-semibold">{username}</h3>
-      <p className="text-sm text-neutral-700 dark:text-neutral-200 ">
-        {message}
-      </p>
+      <h3 className="text-sm font-semibold">{username}</h3>
+      <p className="text-neutral-900 dark:text-neutral-200 ">{message}</p>
       <div className="flex items-center gap-x-1">
         <Button
           variant="ghost"
@@ -36,7 +36,7 @@ export function CommentContent({
           <ThumbsDown className="size-4 mr-2" />
         </Button>
         <Separator orientation="vertical" className="h-4 bg-neutral-500" />
-        <Button variant="ghost" size="roundXs">
+        <Button variant="ghost" size="roundXs" onClick={showReplyForm}>
           Reply
         </Button>
       </div>

@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { SignupDialog } from "@/components/dialog/signup-dialog";
 import { LoginDialog } from "@/components/dialog/login-dialog";
+import { CustomAvatar } from "@/components/custom-avatar";
 
 export default function ProfilePage() {
   const { user, removeToken } = useAuth();
@@ -25,7 +26,16 @@ export default function ProfilePage() {
       <section className="flex flex-wrap justify-between bg-gray-400/30 dark:bg-gray-800/70 shadow shadow-gray-400 dark:shadow-black rounded-lg p-3">
         <div className="flex gap-x-4">
           <div className="w-max h-max bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 shadow-inner shadow-gray-400 dark:shadow-black rounded-full p-2">
-            <UserRound className="w-16 h-16" />
+            {user ? (
+              <CustomAvatar
+                src=""
+                fallback={user.username.charAt(0)}
+                className="size-16"
+                fallbackStyle="bg-transparent text-4xl"
+              />
+            ) : (
+              <UserRound className="size-16" />
+            )}
           </div>
           <div className="space-y-2">
             <h1 className="text-2xl font-bold">

@@ -1,3 +1,4 @@
+import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import {
   FormControl,
@@ -9,10 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-interface FormInputProps {
+interface FormInputProps extends React.FormHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: UseFormReturn<any>;
-  label: string;
+  label?: string;
   placeholder: string;
   description?: string;
   name: string;
@@ -32,6 +33,7 @@ export function FormInput({
   rootStyle,
   labelStyle,
   controlStyle,
+  ...props
 }: FormInputProps) {
   return (
     <FormField
@@ -45,6 +47,7 @@ export function FormInput({
               placeholder={placeholder}
               type={type}
               className={controlStyle}
+              {...props}
               {...field}
             />
           </FormControl>

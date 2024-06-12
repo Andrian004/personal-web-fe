@@ -7,10 +7,12 @@ import { cn } from "@/lib/utils";
 import { CustomAvatar } from "@/components/custom-avatar";
 import { Button } from "@/components/ui/button";
 import { CommentContent } from "./comment-content";
+import { ReplyForm } from "./reply-form";
 import { SuccessResponse } from "@/interfaces/api-interface";
 import { Comment } from "@/interfaces/comment-interface";
 import { Loader } from "@/components/loader";
 import { ConnectionsError } from "@/components/error/connections-error";
+import { ReplyCard } from "./reply-card";
 
 interface CommentCardProps {
   commentId: string;
@@ -32,6 +34,7 @@ export function CommentCard({
   hasReply,
 }: CommentCardProps) {
   const [openReplies, setOpenReplies] = useState(false);
+  const [showMainReplyForm, setShowMainReplyForm] = useState(false);
 
   const {
     data,
@@ -50,15 +53,28 @@ export function CommentCard({
     refetch();
   };
 
+  const handleShowMainReplyForm = () => setShowMainReplyForm(true);
+  const handleCloseMainReplyForm = () => setShowMainReplyForm(false);
+
   return (
-    <div className="flex gap-x-2">
+    <div className="w-full flex gap-x-2">
       <CustomAvatar src={avatarSrc} fallback={username.charAt(0)} />
-      <div className="space-y-1">
+      <div className="w-full space-y-1">
         <CommentContent
           username={username}
           message={message}
           totalLikes={totalLikes}
+          showReplyForm={handleShowMainReplyForm}
         />
+
+        {showMainReplyForm && (
+          <ReplyForm
+            commentId={commentId}
+            handleClose={handleCloseMainReplyForm}
+            refetch={refetch}
+          />
+        )}
+
         {hasReply && (
           <Button
             variant="ghost"
@@ -75,6 +91,7 @@ export function CommentCard({
             {openReplies ? "Hide replies" : "Show replies"}
           </Button>
         )}
+
         {openReplies ? (
           isLoading ? (
             <Loader className="min-h-max p-4" childStyle="size-6" />
@@ -82,20 +99,12 @@ export function CommentCard({
             <ConnectionsError />
           ) : (
             data?.body.map((reply) => (
-              <div key={reply._id} className="flex gap-x-2">
-                <CustomAvatar
-                  src=""
-                  fallback={reply.sender.username.charAt(0)}
-                  className="size-8"
-                />
-                <div className="space-y-1">
-                  <CommentContent
-                    username={reply.sender.username}
-                    message={reply.message}
-                    totalLikes={reply.totalLikes}
-                  />
-                </div>
-              </div>
+              <ReplyCard
+                key={reply._id}
+                commentId={commentId}
+                reply={reply}
+                refetch={refetch}
+              />
             ))
           )
         ) : null}

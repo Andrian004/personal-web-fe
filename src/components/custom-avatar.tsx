@@ -4,13 +4,19 @@ interface CustomAvatarProps {
   src: string;
   fallback: string;
   className?: string;
+  fallbackStyle?: string;
 }
 
-export function CustomAvatar({ fallback, src, className }: CustomAvatarProps) {
+export function CustomAvatar({
+  fallback,
+  src,
+  className,
+  fallbackStyle,
+}: CustomAvatarProps) {
   return (
     <Avatar className={className}>
       <AvatarImage src={src} />
-      <AvatarFallback>{fallback}</AvatarFallback>
+      <AvatarFallback className={fallbackStyle}>{fallback}</AvatarFallback>
     </Avatar>
   );
 }
