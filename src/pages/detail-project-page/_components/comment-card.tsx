@@ -15,24 +15,11 @@ import { ConnectionsError } from "@/components/error/connections-error";
 import { ReplyCard } from "./reply-card";
 
 interface CommentCardProps {
-  commentId: string;
-  projectId: string;
-  username: string;
-  message: string;
-  avatarSrc?: string;
-  totalLikes: number;
-  hasReply: boolean;
+  commentData: Comment;
 }
 
-export function CommentCard({
-  commentId,
-  projectId,
-  username,
-  message,
-  avatarSrc = "",
-  totalLikes,
-  hasReply,
-}: CommentCardProps) {
+export function CommentCard({ commentData }: CommentCardProps) {
+  const { projectId, _id: commentId, hasReply, sender } = commentData;
   const [openReplies, setOpenReplies] = useState(false);
   const [showMainReplyForm, setShowMainReplyForm] = useState(false);
 
@@ -58,12 +45,10 @@ export function CommentCard({
 
   return (
     <div className="w-full flex gap-x-2">
-      <CustomAvatar src={avatarSrc} fallback={username.charAt(0)} />
+      <CustomAvatar src="" fallback={sender.username.charAt(0)} />
       <div className="w-full space-y-1">
         <CommentContent
-          username={username}
-          message={message}
-          totalLikes={totalLikes}
+          commentData={commentData}
           showReplyForm={handleShowMainReplyForm}
         />
 

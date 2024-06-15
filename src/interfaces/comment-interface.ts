@@ -12,6 +12,7 @@ export interface Comment {
   isReply: boolean;
   totalLikes: number;
   totalDislikes: number;
+  liked: boolean;
   createdAt: string;
   updatedAt: string;
 }

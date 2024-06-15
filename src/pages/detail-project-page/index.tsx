@@ -156,15 +156,7 @@ export default function DetailProjectPage() {
                     <h1 className="text-center mb-4">No comments yet😴</h1>
                   ) : (
                     comments.data?.body.map((comment) => (
-                      <CommentCard
-                        key={comment._id}
-                        commentId={comment._id}
-                        projectId={comment.projectId}
-                        username={comment.sender.username}
-                        message={comment.message}
-                        totalLikes={comment.totalLikes}
-                        hasReply={comment.hasReply}
-                      />
+                      <CommentCard key={comment._id} commentData={comment} />
                     ))
                   )}
                 </div>

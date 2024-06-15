@@ -25,9 +25,7 @@ export function ReplyCard({ commentId, reply, refetch }: ReplyCardProps) {
       />
       <div className="w-full space-y-1">
         <CommentContent
-          username={reply.sender.username}
-          message={reply.message}
-          totalLikes={reply.totalLikes}
+          commentData={reply}
           showReplyForm={handleShowReplyForm}
         />
         {showReplyForm && (
