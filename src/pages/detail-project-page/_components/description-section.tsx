@@ -2,17 +2,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface ProjectDescriptionProps {
+interface DescriptionSectionProps {
   desc: string;
   github: string;
   url: string;
 }
 
-export function ProjectDescription({
+export function DescriptionSection({
   desc,
   github,
   url,
-}: ProjectDescriptionProps) {
+}: DescriptionSectionProps) {
   const [expand, setExpand] = useState(false);
   return (
     <div className="h-full bg-gray-200 dark:bg-gray-700/70 p-2 space-y-2 rounded-sm">

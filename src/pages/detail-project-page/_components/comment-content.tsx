@@ -60,7 +60,7 @@ export function CommentContent({
     <>
       <h3 className="text-sm font-bold">
         {commentData.sender.username}{" "}
-        <span className="text-xs font-light text-neutral-300">
+        <span className="text-xs font-light text-neutral-700 dark:text-neutral-300 ml-2">
           {relativeTime(commentData.createdAt)}
         </span>
       </h3>

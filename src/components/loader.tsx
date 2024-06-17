@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Aperture } from "lucide-react";
+import { Cog } from "lucide-react";
 
 interface LoaderProps {
   className?: string;
@@ -14,7 +14,7 @@ export function Loader({ className, childStyle }: LoaderProps) {
         className
       )}
     >
-      <Aperture className={cn("size-10 animate-spin", childStyle)} />
+      <Cog className={cn("size-10 animate-spin", childStyle)} />
     </div>
   );
 }

@@ -11,14 +11,12 @@ import { CustomBreadcrumb } from "@/components/custom-breadcrumb";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/loader";
-import { CommentCard } from "./_components/comment-card";
-import { ProjectDescription } from "./_components/project-description";
-import { CommentForm } from "./_components/comment-form";
+import { DescriptionSection } from "./_components/description-section";
 
 import { SuccessResponse } from "@/interfaces/api-interface";
 import { Project } from "@/interfaces/project-interface";
-import { Comment } from "@/interfaces/comment-interface";
 import { AdditionalLikeData } from "@/types";
+import { CommentSection } from "./_components/comment-section";
 
 export default function DetailProjectPage() {
   const { id: paramsId } = useParams();
@@ -37,11 +35,6 @@ export default function DetailProjectPage() {
         return response;
       },
     });
-
-  const comments: UseQueryResult<SuccessResponse<Comment[]>> = useQuery({
-    queryKey: ["reply", paramsId],
-    queryFn: () => getApi(`/comment/${paramsId}`),
-  });
 
   const postMutation = useMutation({
     mutationFn: (formData: AdditionalLikeData) =>
@@ -102,7 +95,7 @@ export default function DetailProjectPage() {
             <div className="flex justify-between flex-wrap gap-2">
               <div className="flex gap-x-2 justify-start items-center">
                 <CustomAvatar
-                  src="https://avatars.githubusercontent.com/u/128672158?s=400&u=3b5a63f174ccfe0a6b401d0a515756adba20e8eb&v=4"
+                  src="https://avatars.githubusercontent.com/u/128672158?s=400"
                   fallback="A"
                 />
                 <div>
@@ -138,30 +131,15 @@ export default function DetailProjectPage() {
                 </Button>
               </div>
             </div>
-            <ProjectDescription
+            <DescriptionSection
               desc={data.body.description}
               github={data.body.github}
               url={data.body.url}
             />
-            <div id="comments">
-              <h2 className="text-md lg:text-md text-neutral-700 dark:text-neutral-300">
-                {data.body.totalComments} Comments
-              </h2>
-              <div className="space-y-5 mt-4">
-                <CommentForm />
-                <div className="space-y-2">
-                  {comments.isLoading ? (
-                    <Loader className="min-h-max p-4" />
-                  ) : comments.error || comments.data?.body.length === 0 ? (
-                    <h1 className="text-center mb-4">No comments yet😴</h1>
-                  ) : (
-                    comments.data?.body.map((comment) => (
-                      <CommentCard key={comment._id} commentData={comment} />
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+            <CommentSection
+              projectId={paramsId}
+              totalComments={data.body.totalComments}
+            />
           </section>
           <Footer />
         </>

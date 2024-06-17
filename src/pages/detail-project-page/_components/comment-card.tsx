@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { Fragment, useState } from "react";
+import { ChevronDown, CornerDownRight } from "lucide-react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 
@@ -8,7 +8,6 @@ import { CustomAvatar } from "@/components/custom-avatar";
 import { Button } from "@/components/ui/button";
 import { CommentContent } from "./comment-content";
 import { ReplyForm } from "./reply-form";
-import { SuccessResponse } from "@/interfaces/api-interface";
 import { Comment } from "@/interfaces/comment-interface";
 import { Loader } from "@/components/loader";
 import { ConnectionsError } from "@/components/error/connections-error";
@@ -25,14 +24,23 @@ export function CommentCard({ commentData }: CommentCardProps) {
 
   const {
     data,
-    isLoading,
+    isFetching,
     error,
     refetch,
-  }: UseQueryResult<SuccessResponse<Comment[]>> = useQuery({
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["child-reply", projectId, commentId],
-    queryFn: () => getApi(`/comment/${projectId}/${commentId}`),
+    queryFn: ({ pageParam }) =>
+      getApi(`/comment/${projectId}/${commentId}?page=${pageParam}`),
     refetchOnWindowFocus: false,
     enabled: false,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (lastPage.pagination.hasNextPage) return lastPageParam + 1;
+      return undefined;
+    },
   });
 
   const getReplies = () => {
@@ -78,19 +86,40 @@ export function CommentCard({ commentData }: CommentCardProps) {
         )}
 
         {openReplies ? (
-          isLoading ? (
+          isFetching && !isFetchingNextPage ? (
             <Loader className="min-h-max p-4" childStyle="size-6" />
           ) : error ? (
             <ConnectionsError />
           ) : (
-            data?.body.map((reply) => (
-              <ReplyCard
-                key={reply._id}
-                commentId={commentId}
-                reply={reply}
-                refetch={refetch}
-              />
-            ))
+            <>
+              {data?.pages.map((group, i) => (
+                <Fragment key={i}>
+                  {group.body.map((reply: Comment) => (
+                    <ReplyCard
+                      key={reply._id}
+                      commentId={commentId}
+                      reply={reply}
+                      refetch={refetch}
+                    />
+                  ))}
+                </Fragment>
+              ))}
+              {hasNextPage &&
+                (isFetchingNextPage ? (
+                  <Loader className="min-h-max p-4" childStyle="size-6" />
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="roundSm"
+                    className="text-sky-500"
+                    onClick={() => fetchNextPage()}
+                    disabled={!hasNextPage || isFetchingNextPage}
+                  >
+                    <CornerDownRight className="size-4 mr-2" />
+                    Load more
+                  </Button>
+                ))}
+            </>
           )
         ) : null}
       </div>
