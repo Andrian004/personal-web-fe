@@ -32,7 +32,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
       )}
     >
       <div className="text-center">
-        <h1 className="text-2xl font-semibold">Bar-Bar Code</h1>
+        <h1 className="text-2xl font-semibold">Andrian004</h1>
         <h2 className="text-md font-medium text-neutral-700 dark:text-neutral-300">
           Web Developer
         </h2>

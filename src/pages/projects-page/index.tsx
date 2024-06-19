@@ -1,6 +1,12 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { FormEvent, useState } from "react";
+import {
+  useQuery,
+  UseQueryResult,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { getApi } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/use-auth";
+
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/footer";
 import { ProjectCard } from "./_components/project-card";
@@ -11,17 +17,32 @@ import { SuccessResponse } from "@/interfaces/api-interface";
 
 export default function ProjectsPage() {
   const { user, token } = useAuth();
+  const queryClient = useQueryClient();
+  const [searchValue, setSearchValue] = useState("");
 
-  const { data, isLoading, error }: UseQueryResult<SuccessResponse<Project[]>> =
-    useQuery({
-      queryKey: ["projects"],
-      queryFn: () => getApi("/project"),
-    });
+  const {
+    data,
+    isLoading,
+    error,
+    isFetching,
+  }: UseQueryResult<SuccessResponse<Project[]>> = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => getApi(`/project?search=${searchValue}`),
+  });
+
+  const handleSearchSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    queryClient.refetchQueries({ queryKey: ["projects"] });
+  };
 
   return (
     <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
       <section className="w-full flex items-center justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
-        <SearchHeader title="Projects" />
+        <SearchHeader
+          title="Projects"
+          onSearchSubmit={handleSearchSubmit}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
       </section>
       <section className="w-full flex flex-row-reverse flex-wrap-reverse items-center gap-x-2">
         <Button
@@ -47,7 +68,7 @@ export default function ProjectsPage() {
         </Button>
       </section>
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {isLoading ? (
+        {isLoading || isFetching ? (
           <>
             <ProjectCard.Skeleton />
             <ProjectCard.Skeleton />
@@ -55,7 +76,7 @@ export default function ProjectsPage() {
             <ProjectCard.Skeleton />
           </>
         ) : error || !data ? (
-          <h1>Error</h1>
+          <h1>{error?.message}</h1>
         ) : (
           data.body.map((project) => (
             <ProjectCard

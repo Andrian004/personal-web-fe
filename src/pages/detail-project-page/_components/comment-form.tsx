@@ -71,9 +71,13 @@ export function CommentForm() {
         className="flex items-start gap-x-2"
       >
         {user ? (
-          <CustomAvatar src="" fallback={user.username[0]} />
+          <CustomAvatar
+            src=""
+            fallback={user.username[0]}
+            className="size-8 sm:size-10"
+          />
         ) : (
-          <UserRound className="size-11 bg-gray-200 dark:bg-gray-600 rounded-full p-2" />
+          <UserRound className="size-8 sm:size-11 bg-gray-200 dark:bg-gray-600 rounded-full p-2" />
         )}
         <div className="w-full flex flex-col">
           <FormInput

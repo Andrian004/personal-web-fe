@@ -53,7 +53,11 @@ export function CommentCard({ commentData }: CommentCardProps) {
 
   return (
     <div className="w-full flex gap-x-2">
-      <CustomAvatar src="" fallback={sender.username.charAt(0)} />
+      <CustomAvatar
+        src=""
+        fallback={sender.username.charAt(0)}
+        className="size-8 sm:size-10"
+      />
       <div className="w-full space-y-1">
         <CommentContent
           commentData={commentData}
