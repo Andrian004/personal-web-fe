@@ -8,7 +8,7 @@ import { CustomAvatar } from "@/components/custom-avatar";
 export default function MainLayout() {
   const { user } = useAuth();
   return (
-    <div className="w-full min-h-screen bg-sky dark:bg-skynight bg-no-repeat bg-center bg-cover flex justify-center font-platypi">
+    <div className="w-full min-h-screen bg-sky dark:bg-skynight bg-no-repeat bg-center bg-cover bg-fixed flex justify-center font-platypi">
       <div className="flex justify-between gap-4 w-full max-w-6xl bg-transparent mt-5 sm:mt-10 md:mt-16 mb-10 px-1 sm:px-4">
         <section className="hidden lg:inline lg:min-w-80 bg-transparent">
           <LeftBar />
