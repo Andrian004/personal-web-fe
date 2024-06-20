@@ -1,4 +1,10 @@
-import { useEffect, useState, ReactNode } from "react";
+import {
+  useEffect,
+  useState,
+  ReactNode,
+  FormEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,17 +19,35 @@ import { cn } from "@/lib/utils";
 interface SearchDialogProps {
   children: ReactNode;
   triggerStyle?: string;
+  onSearchSubmit: (value: string, e?: FormEvent | undefined) => void;
 }
 
-const sugestions: string[] = [
+const suggestions: string[] = [
   "Nugas",
   "Skuynime",
   "Nasa Class",
   "Google Converter",
 ];
 
-export function SearchDialog({ children, triggerStyle }: SearchDialogProps) {
+export function SearchDialog({
+  children,
+  triggerStyle,
+  onSearchSubmit,
+}: SearchDialogProps) {
   const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleKeydown = (e: ReactKeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSearchSubmit(searchValue);
+      setOpen(false);
+    }
+  };
+
+  const handleSelect = (value: string) => {
+    onSearchSubmit(value);
+    setOpen(false);
+  };
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -48,12 +72,16 @@ export function SearchDialog({ children, triggerStyle }: SearchDialogProps) {
         {children}
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search project..." />
+        <CommandInput
+          placeholder="Search project..."
+          onValueChange={(search) => setSearchValue(search)}
+          onKeyDown={handleKeydown}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup>
-            {sugestions.map((suggestion) => (
-              <CommandItem key={suggestion} onClick={() => setOpen(false)}>
+            {suggestions.map((suggestion) => (
+              <CommandItem key={suggestion} onSelect={handleSelect}>
                 {suggestion}
               </CommandItem>
             ))}
