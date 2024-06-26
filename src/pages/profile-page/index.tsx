@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserRound } from "lucide-react";
+import { PencilLine, UserRound } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import AngrySvg from "@/assets/angry.svg";
 import CoolSvg from "@/assets/cool.svg";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { SignupDialog } from "@/components/dialog/signup-dialog";
 import { LoginDialog } from "@/components/dialog/login-dialog";
 import { CustomAvatar } from "@/components/custom-avatar";
+import { AvatarDialog } from "@/components/dialog/avatar-dialog";
 
 export default function ProfilePage() {
   const { user, removeToken } = useAuth();
@@ -21,11 +22,11 @@ export default function ProfilePage() {
   return (
     <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
       <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
-        <Header title="My Account" />
+        <Header title="Account" />
       </section>
-      <section className="flex flex-wrap justify-between bg-gray-400/30 dark:bg-gray-800/70 shadow shadow-gray-400 dark:shadow-black rounded-lg p-3">
-        <div className="flex gap-x-4">
-          <div className="w-max h-max bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 shadow-inner shadow-gray-400 dark:shadow-black rounded-full p-2">
+      <section className="flex justify-between bg-white/80 dark:bg-gray-800/70 shadow shadow-gray-400 dark:shadow-black rounded-lg p-3 gap-x-2">
+        <div className="w-full flex gap-x-2 md:gap-x-4">
+          <div className="w-max h-max relative bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 rounded-full p-2">
             {user ? (
               <CustomAvatar
                 src=""
@@ -36,19 +37,52 @@ export default function ProfilePage() {
             ) : (
               <UserRound className="size-16" />
             )}
+            <AvatarDialog>
+              <Button
+                size="roundXs"
+                variant="outline"
+                className="absolute bottom-0 right-0"
+                disabled={!user}
+              >
+                <PencilLine className="size-4" />
+              </Button>
+            </AvatarDialog>
           </div>
-          <div className="space-y-2">
+          <div className="w-full sm:space-y-2">
             <h1 className="text-2xl font-bold">
               {user ? user.username : "Guest"}
             </h1>
-            <h2 className="text-neutral-700 dark:text-neutral-400">
-              {user ? user.role : "guest user"}
+            <h2 className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-400">
+              This is just public username. You can{" "}
+              <span className="text-sky-600 underline cursor-pointer">
+                change it
+              </span>{" "}
+              anytime.
             </h2>
           </div>
         </div>
-        <Button variant="destructive" size="sm" disabled={user ? false : true}>
-          Delete account
-        </Button>
+        <div className="space-y-2">
+          <Button
+            variant="gray"
+            size="sm"
+            disabled={user ? false : true}
+            className="w-full"
+          >
+            <p>
+              Edit <span className="hidden sm:inline">name</span>
+            </p>
+          </Button>
+          <Button
+            variant="gray"
+            size="sm"
+            disabled={user ? false : true}
+            className="w-full"
+          >
+            <p>
+              <span className="hidden sm:inline">Change</span> Pass
+            </p>
+          </Button>
+        </div>
       </section>
       <section className="w-full flex flex-col justify-center items-center space-y-4 pt-6">
         <div className="text-center">

@@ -19,7 +19,7 @@ export function ReplyCard({ commentId, reply, refetch }: ReplyCardProps) {
   return (
     <div className="w-full flex gap-x-2">
       <CustomAvatar
-        src=""
+        src={reply.sender.avatar.imgUrl}
         fallback={reply.sender.username.charAt(0)}
         className="size-7"
       />

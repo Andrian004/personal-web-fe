@@ -54,7 +54,7 @@ export function CommentCard({ commentData }: CommentCardProps) {
   return (
     <div className="w-full flex gap-x-2">
       <CustomAvatar
-        src=""
+        src={sender.avatar.imgUrl}
         fallback={sender.username.charAt(0)}
         className="size-8 sm:size-10"
       />

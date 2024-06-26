@@ -8,7 +8,7 @@ export const getApi = async (endpoint: string) => {
     });
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
+    if (axios.isAxiosError(error) && error.response && error.status !== 500) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Server error");
@@ -34,7 +34,7 @@ export const postApi = async (
     );
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
+    if (axios.isAxiosError(error) && error.response && error.status !== 500) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Server error");
@@ -60,7 +60,7 @@ export const putApi = async (
     );
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
+    if (axios.isAxiosError(error) && error.response && error.status !== 500) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Server error");
@@ -88,7 +88,33 @@ export const deleteApi = async (
     );
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
+    if (axios.isAxiosError(error) && error.response && error.status !== 500) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error("Server error");
+  }
+};
+
+// update (formData)
+export const patchFormApi = async (
+  endpoint: string,
+  formData: FormData,
+  token?: string
+) => {
+  const headerOptions = {
+    Authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "multipart/form-data",
+  };
+
+  try {
+    const response = await axios.patch(
+      import.meta.env.VITE_API_URL + endpoint,
+      formData,
+      { headers: headerOptions }
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response && error.status !== 500) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Server error");

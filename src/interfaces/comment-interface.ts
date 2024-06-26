@@ -1,4 +1,5 @@
 type Sender = {
+  avatar: { imgUrl: string };
   username: string;
   role: string;
 };
