@@ -29,7 +29,7 @@ export default function ProfilePage() {
           <div className="w-max h-max relative bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 rounded-full p-2">
             {user ? (
               <CustomAvatar
-                src=""
+                src={user.avatar.imgUrl}
                 fallback={user.username.charAt(0)}
                 className="size-16"
                 fallbackStyle="bg-transparent text-4xl"

@@ -43,8 +43,8 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
       window.location.reload();
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      if (error.response) {
-        toast.error(error.response.data.message);
+      if (error) {
+        toast.error(error.message);
       }
     },
   });

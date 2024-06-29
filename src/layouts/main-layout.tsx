@@ -27,7 +27,7 @@ export default function MainLayout() {
           >
             {user ? (
               <CustomAvatar
-                src=""
+                src={user.avatar.imgUrl}
                 fallback={user.username.charAt(0)}
                 className="size-full"
                 fallbackStyle="bg-transparent text-4xl font-bold"

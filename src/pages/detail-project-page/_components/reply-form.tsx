@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Annoyed } from "lucide-react";
+import { Annoyed, UserRound } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,7 +70,7 @@ export function ReplyForm({
 
     const commentData = {
       projectId,
-      uuid: user.userId,
+      uuid: user._id,
       message: data.message,
       groupId: commentId,
     };
@@ -82,11 +82,15 @@ export function ReplyForm({
         onSubmit={replyForm.handleSubmit(handleComment)}
         className="flex gap-x-2"
       >
-        <CustomAvatar
-          src=""
-          fallback={user ? user.username[0] : "G"}
-          className="size-7"
-        />
+        {user ? (
+          <CustomAvatar
+            src={user.avatar.imgUrl}
+            fallback={user ? user.username[0] : "G"}
+            className="size-7"
+          />
+        ) : (
+          <UserRound className="size-7 sm:size-11 bg-gray-200 dark:bg-gray-600 rounded-full p-2" />
+        )}
         <div className="w-full flex flex-col">
           <FormInput
             form={replyForm}

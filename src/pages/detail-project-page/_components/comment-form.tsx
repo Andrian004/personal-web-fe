@@ -58,7 +58,7 @@ export function CommentForm() {
 
     const commentData = {
       projectId,
-      uuid: user.userId,
+      uuid: user._id,
       message: data.message,
     };
     commentMutation.mutate(commentData);
@@ -72,7 +72,7 @@ export function CommentForm() {
       >
         {user ? (
           <CustomAvatar
-            src=""
+            src={user.avatar.imgUrl}
             fallback={user.username[0]}
             className="size-8 sm:size-10"
           />

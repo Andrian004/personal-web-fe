@@ -1,9 +1,15 @@
 import axios from "axios";
 
 // get
-export const getApi = async (endpoint: string) => {
+export const getApi = async (endpoint: string, token?: string) => {
+  const headerOptions = {
+    Authorization: token ? `Bearer ${token}` : "",
+    "Content-Type": "application/json",
+  };
+
   try {
     const response = await axios.get(import.meta.env.VITE_API_URL + endpoint, {
+      headers: headerOptions,
       withCredentials: true,
     });
     return response.data;
@@ -30,10 +36,11 @@ export const postApi = async (
     const response = await axios.post(
       import.meta.env.VITE_API_URL + endpoint,
       formData,
-      { headers: headerOptions }
+      { headers: headerOptions, withCredentials: true }
     );
     return response.data;
   } catch (error) {
+    console.log(error);
     if (axios.isAxiosError(error) && error.response && error.status !== 500) {
       throw new Error(error.response.data.message);
     }
@@ -56,7 +63,7 @@ export const putApi = async (
     const response = await axios.put(
       import.meta.env.VITE_API_URL + endpoint,
       formData,
-      { headers: headerOptions }
+      { headers: headerOptions, withCredentials: true }
     );
     return response.data;
   } catch (error) {
@@ -84,6 +91,7 @@ export const deleteApi = async (
       {
         headers: headerOptions,
         params: params,
+        withCredentials: true,
       }
     );
     return response.data;
@@ -110,7 +118,7 @@ export const patchFormApi = async (
     const response = await axios.patch(
       import.meta.env.VITE_API_URL + endpoint,
       formData,
-      { headers: headerOptions }
+      { headers: headerOptions, withCredentials: true }
     );
     return response.data;
   } catch (error) {
