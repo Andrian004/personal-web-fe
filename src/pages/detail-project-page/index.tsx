@@ -61,9 +61,9 @@ export default function DetailProjectPage() {
     if (!paramsId || !user) return;
 
     if (!isLiked) {
-      return postMutation.mutate({ pid: paramsId, uid: user.userId });
+      return postMutation.mutate({ pid: paramsId, uid: user._id });
     }
-    return deleteMutation.mutate({ pid: paramsId, uid: user.userId });
+    return deleteMutation.mutate({ pid: paramsId, uid: user._id });
   };
 
   if (error) {

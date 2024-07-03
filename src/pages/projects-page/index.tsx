@@ -24,6 +24,7 @@ export default function ProjectsPage() {
   }: UseQueryResult<SuccessResponse<Project[]>> = useQuery({
     queryKey: ["projects"],
     queryFn: () => getApi(`/project?search=${searchValue}`),
+    retry: false,
   });
 
   const handleSearchSubmit = async (value: string, e?: FormEvent) => {
@@ -75,7 +76,7 @@ export default function ProjectsPage() {
             <ProjectCard
               key={project.id}
               projectId={project.id}
-              userId={user?.userId}
+              userId={user?._id}
               token={token}
               image={project.image.imgUrl}
               title={project.title}
