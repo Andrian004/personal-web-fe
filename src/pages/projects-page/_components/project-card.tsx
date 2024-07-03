@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
-import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { deleteApi, postApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
@@ -10,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
 import { AdditionalLikeData } from "@/types";
+import { ShareDialog } from "@/components/dialog/share-dialog";
 
 interface ProjectCardProps {
   projectId: string;
@@ -74,15 +74,6 @@ export function ProjectCard({
     return deleteMutation.mutate({ pid: projectId, uid: userId });
   };
 
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      toast.success("Link has been copied");
-    } catch (error) {
-      toast.error("Failed to copy link");
-    }
-  };
-
   return (
     <div
       className={cn(
@@ -104,14 +95,15 @@ export function ProjectCard({
       </div>
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">
-          <Button
-            variant="ghost"
-            size="xs"
-            className="bg-transparent hover:bg-transparent hover:text-sky-500"
-            onClick={handleCopyLink}
-          >
-            <Share2 className="w-5 h-5 mr-1" />
-          </Button>
+          <ShareDialog defaultLink={link}>
+            <Button
+              variant="ghost"
+              size="xs"
+              className="bg-transparent hover:bg-transparent hover:text-sky-500"
+            >
+              <Share2 className="w-5 h-5 mr-1" />
+            </Button>
+          </ShareDialog>
           <Button
             variant="ghost"
             size="xs"

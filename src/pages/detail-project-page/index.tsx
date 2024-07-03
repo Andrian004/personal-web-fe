@@ -17,6 +17,7 @@ import { SuccessResponse } from "@/interfaces/api-interface";
 import { Project } from "@/interfaces/project-interface";
 import { AdditionalLikeData } from "@/types";
 import { CommentSection } from "./_components/comment-section";
+import { ShareDialog } from "@/components/dialog/share-dialog";
 
 export default function DetailProjectPage() {
   const { id: paramsId } = useParams();
@@ -121,14 +122,16 @@ export default function DetailProjectPage() {
                   />
                   {totalLikes}
                 </Button>
-                <Button
-                  variant="gray"
-                  size="roundSm"
-                  className="text-xs sm:text-base"
-                >
-                  <Share2 className="size-4 sm:size-5 mr-2" />
-                  Share
-                </Button>
+                <ShareDialog defaultLink={data.body.url}>
+                  <Button
+                    variant="gray"
+                    size="roundSm"
+                    className="text-xs sm:text-base"
+                  >
+                    <Share2 className="size-4 sm:size-5 mr-2" />
+                    Share
+                  </Button>
+                </ShareDialog>
               </div>
             </div>
             <DescriptionSection
