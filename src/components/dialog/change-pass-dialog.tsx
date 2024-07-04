@@ -25,7 +25,7 @@ interface ChangePasswordDialogProps {
 }
 
 export function ChangePasswordDialog({ children }: ChangePasswordDialogProps) {
-  const { user, token } = useAuth();
+  const { user, token, refreshToken } = useAuth();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const changePassForm = useForm<z.infer<typeof changePassSchema>>({
@@ -44,7 +44,13 @@ export function ChangePasswordDialog({ children }: ChangePasswordDialogProps) {
       setDialogOpen(false);
       toast.success(data.message);
     },
-    onError: (error) => toast.error(error.message),
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        refreshToken();
+      } else {
+        toast.error(error.message);
+      }
+    },
   });
 
   const handleChangePassword = (values: z.infer<typeof changePassSchema>) => {

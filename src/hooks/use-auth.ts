@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
-import { useQuery } from "@tanstack/react-query";
-import { deleteApi, getApi } from "@/lib/fetcher";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteApi, getApi, postApi } from "@/lib/fetcher";
 import { toast } from "sonner";
 
 interface UserPayload {
@@ -20,7 +20,10 @@ type User = {
 };
 
 export const useAuth = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "token",
+    "refresh_token",
+  ]);
   const [user, setUser] = useState<User | null>(null);
 
   const { data, isLoading, error, refetch } = useQuery({
@@ -38,10 +41,11 @@ export const useAuth = () => {
   });
 
   const logout = () => {
-    deleteApi(`/auth/logout`, cookies.token)
+    deleteApi(`/auth/logout`)
       .then(() => {
         setUser(null);
         removeCookie("token");
+        removeCookie("refresh_token");
         window.location.reload();
         toast.success("Logout Successfully");
       })
@@ -49,6 +53,27 @@ export const useAuth = () => {
         toast.error("Failed to logout! Try again");
       });
   };
+
+  const refreshMutation = useMutation({
+    mutationFn: (refreshToken: string) =>
+      postApi("/auth/refresh", {
+        refreshToken: refreshToken,
+      }),
+    onSuccess: (data) => {
+      setCookie("token", data.token);
+      setUser(data.body);
+    },
+    onError: () => {
+      logout();
+    },
+    retry: false,
+  });
+
+  const refreshToken = useCallback(() => {
+    if (cookies.refresh_token) {
+      refreshMutation.mutate(cookies.refresh_token);
+    }
+  }, [cookies.refresh_token, refreshMutation]);
 
   useEffect(() => {
     if (cookies.token) {
@@ -59,13 +84,17 @@ export const useAuth = () => {
   useEffect(() => {
     if (data && !isLoading && !error) {
       setUser(data.body);
+    } else if (error?.message === "jwt expired") {
+      refreshToken();
     }
-  }, [data, isLoading, error]);
+  }, [data, isLoading, error, refreshToken]);
 
   return {
     token: cookies.token,
     user: user,
     setToken: (token: string) => setCookie("token", token),
+    setRefreshToken: (token: string) => setCookie("refresh_token", token),
+    refreshToken: refreshToken,
     removeToken: logout,
     invalidateAuth: refetch,
   };

@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import { ChangePasswordDialog } from "@/components/dialog/change-pass-dialog";
 
 export default function ProfilePage() {
-  const { user, token, removeToken, invalidateAuth } = useAuth();
+  const { user, token, removeToken, refreshToken, invalidateAuth } = useAuth();
   const [signupState, setSignupState] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<boolean>(false);
   const [editName, setEditName] = useState<boolean>(false);
@@ -32,7 +32,13 @@ export default function ProfilePage() {
       setNewName("");
       toast.success(data.message);
     },
-    onError: (error) => toast.error(error.message),
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        refreshToken();
+      } else {
+        toast.error(error.message);
+      }
+    },
   });
 
   const handleEditName = () => {

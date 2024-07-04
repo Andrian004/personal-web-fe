@@ -19,7 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export function CommentForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { user, token } = useAuth();
+  const { user, token, refreshToken } = useAuth();
   const { id: projectId } = useParams();
   const [focused, setFocused] = useState(false);
   const [emoji, setEmoji] = useState("");
@@ -38,7 +38,8 @@ export function CommentForm() {
       commentForm.reset();
       queryClient.invalidateQueries({ queryKey: ["reply", projectId] });
     },
-    onError: () => {
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
       toast.error("Comment failed!");
     },
   });

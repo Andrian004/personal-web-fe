@@ -31,7 +31,7 @@ export function ReplyForm({
 }: ReplyFormProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { user, token } = useAuth();
+  const { user, token, refreshToken } = useAuth();
   const { id: projectId } = useParams();
   const [emoji, setEmoji] = useState("");
 
@@ -50,7 +50,8 @@ export function ReplyForm({
       queryClient.invalidateQueries({ queryKey: ["reply", projectId] });
       if (refetch) refetch();
     },
-    onError: () => {
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
       toast.error("Comment failed!");
     },
   });

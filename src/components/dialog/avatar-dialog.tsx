@@ -21,7 +21,7 @@ interface AvatarDialogProps {
 }
 
 export function AvatarDialog({ children }: AvatarDialogProps) {
-  const { user, token, invalidateAuth } = useAuth();
+  const { user, token, refreshToken, invalidateAuth } = useAuth();
   const [picture, setPicture] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileSize, setFileSize] = useState(0);
@@ -35,8 +35,12 @@ export function AvatarDialog({ children }: AvatarDialogProps) {
       toast.success(data.message);
       setDialogOpen(false);
     },
-    onError: () => {
-      toast.error("Failed upload an image.");
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        refreshToken();
+      } else {
+        toast.error("Failed upload an image.");
+      }
     },
   });
 

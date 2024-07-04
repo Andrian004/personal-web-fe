@@ -5,6 +5,7 @@ import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import { deleteApi, getApi, postApi } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 import { CustomAvatar } from "@/components/custom-avatar";
 import { CustomBreadcrumb } from "@/components/custom-breadcrumb";
@@ -21,7 +22,7 @@ import { ShareDialog } from "@/components/dialog/share-dialog";
 
 export default function DetailProjectPage() {
   const { id: paramsId } = useParams();
-  const { token, user } = useAuth();
+  const { token, user, refreshToken } = useAuth();
   const navigate = useNavigate();
   const [totalLikes, setTotalLikes] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -44,7 +45,10 @@ export default function DetailProjectPage() {
       setIsLiked(true);
       setTotalLikes(totalLikes + 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const deleteMutation = useMutation({
@@ -54,7 +58,10 @@ export default function DetailProjectPage() {
       setIsLiked(false);
       setTotalLikes(totalLikes - 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const handleLike = () => {

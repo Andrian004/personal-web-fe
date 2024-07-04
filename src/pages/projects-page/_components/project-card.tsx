@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 import { deleteApi, postApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -40,6 +42,7 @@ export function ProjectCard({
   liked,
   desc,
 }: ProjectCardProps) {
+  const { refreshToken } = useAuth();
   const navigate = useNavigate();
   const [onHover, setOnHover] = useState(false);
   const [totalLikes, setTotalLikes] = useState<number>(likes);
@@ -52,7 +55,10 @@ export function ProjectCard({
       setIsLiked(true);
       setTotalLikes(totalLikes + 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const deleteMutation = useMutation({
@@ -62,7 +68,10 @@ export function ProjectCard({
       setIsLiked(false);
       setTotalLikes(totalLikes - 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const handleLike = () => {

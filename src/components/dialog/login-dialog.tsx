@@ -23,7 +23,7 @@ interface LoginDialogProps {
 }
 
 export function LoginDialog({ open, onClose }: LoginDialogProps) {
-  const { setToken } = useAuth();
+  const { setToken, setRefreshToken } = useAuth();
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -38,6 +38,7 @@ export function LoginDialog({ open, onClose }: LoginDialogProps) {
       postApi("/auth/login", formData),
     onSuccess: (data) => {
       setToken(data.token);
+      setRefreshToken(data.refreshToken);
       onClose();
       window.location.reload();
     },

@@ -23,7 +23,7 @@ interface SignupModalProps {
 }
 
 export function SignupDialog({ open, onClose }: SignupModalProps) {
-  const { setToken } = useAuth();
+  const { setToken, setRefreshToken } = useAuth();
 
   const signupForm = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -39,6 +39,7 @@ export function SignupDialog({ open, onClose }: SignupModalProps) {
       postApi("/auth/signup", formData),
     onSuccess: (data) => {
       setToken(data.token);
+      setRefreshToken(data.refreshToken);
       onClose();
       window.location.reload();
     },

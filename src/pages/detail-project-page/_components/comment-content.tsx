@@ -7,6 +7,7 @@ import { AdditionalLikeComment } from "@/types";
 import { deleteApi, postApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
 import { relativeTime } from "@/lib/relative-time";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -21,7 +22,7 @@ export function CommentContent({
   commentData,
   showReplyForm,
 }: CommentContentProps) {
-  const { token, user } = useAuth();
+  const { token, user, refreshToken } = useAuth();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState<boolean>(commentData.liked);
   const [totalLike, setTotalLike] = useState<number>(commentData.totalLikes);
@@ -33,7 +34,10 @@ export function CommentContent({
       setIsLiked(true);
       setTotalLike((prev) => prev + 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const unlikeMutation = useMutation({
@@ -43,7 +47,10 @@ export function CommentContent({
       setIsLiked(false);
       setTotalLike((prev) => prev - 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const handleCommentLike = () => {
@@ -51,9 +58,9 @@ export function CommentContent({
     if (!commentData._id || !user) return;
 
     if (!isLiked) {
-      return likeMutation.mutate({ cid: commentData._id, uid: user.userId });
+      return likeMutation.mutate({ cid: commentData._id, uid: user._id });
     }
-    return unlikeMutation.mutate({ cid: commentData._id, uid: user.userId });
+    return unlikeMutation.mutate({ cid: commentData._id, uid: user._id });
   };
 
   return (
