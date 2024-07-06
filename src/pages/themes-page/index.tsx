@@ -27,8 +27,9 @@ export default function ThemesPage() {
               {theme === "light" ? "Light" : "Dark"}
             </h2>
             <p className="text-sm font-light text-neutral-700 dark:text-neutral-300">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus,
-              voluptatum.
+              {theme === "light"
+                ? "A clear sky during the day is a vast expanse of bright blue, offering a sense of openness and tranquility."
+                : "The night sky is a mesmerizing tapestry of stars, planets, and celestial wonders that inspire awe and curiosity."}
             </p>
           </div>
         </div>

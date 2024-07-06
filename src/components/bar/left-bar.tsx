@@ -71,7 +71,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <ContactCard
             logo={<Phone className="w-5 h-5" />}
             title="Phone"
-            desc="+6283531175547"
+            desc="+987654321098"
             iconStyle="text-green-500"
           />
         </div>
@@ -87,7 +87,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <ContactCard
             logo={<MapPin className="w-5 h-5" />}
             title="Address"
-            desc="Bandung, ID"
+            desc="Yogyakarta, ID"
             iconStyle="text-rose-600"
           />
         </div>
