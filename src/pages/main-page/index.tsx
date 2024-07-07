@@ -1,7 +1,10 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { TodoList } from "./_components/todo-list";
-import { CodeXml, Bed, Coffee, GraduationCap } from "lucide-react";
+import nodeSvg from "@/assets/node.svg";
+import reactSvg from "@/assets/react.svg";
+import mongoSvg from "@/assets/mongodb.svg";
+import expressSvg from "@/assets/express.svg";
 
 export default function MainPage() {
   return (
@@ -11,40 +14,45 @@ export default function MainPage() {
       </section>
       <section className="font-normal">
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam quis
-          tenetur recusandae molestiae possimus. Inventore expedita minima
-          exercitationem molestiae blanditiis veritatis est voluptate quis eos
-          rem maiores porro architecto assumenda quasi magni libero ut mollitia,
-          consequuntur aut cum temporibus necessitatibus modi? Accusamus maxime
-          culpa est, fugit ex mollitia pariatur adipisci?
+          Hi guys! Welcome to my website. I'm Andri and I'm a software developer
+          with a deep interest in coding and technologies. Excited to leverage
+          my self-learning and practical experience to contribute in software
+          development projects and overcome programming challenges. I'm always
+          open to discuss about project or partnerships. So you can contact me
+          anytime{" "}
+          <span className="text-sky-500 underline">
+            ( Just kidding, don't contact me please🙏 )
+          </span>
+          .
         </p>
       </section>
       <section className="space-y-2">
-        <h2 className="text-lg font-medium">What I Do!</h2>
+        <h2 className="text-lg font-medium">My Favorite Tech</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <TodoList
             rootClass="bg-gradient-to-br from-white to-rose-100 dark:from-gray-950 dark:to-rose-950"
-            icon={<CodeXml className="w-10 h-10 text-sky-500" />}
-            title="Coding"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, iure aspernatur commodi perspiciatis cumque chinooooo ad!"
+            img={mongoSvg}
+            title="MongoDB"
+            desc="You don't need a separate database to support transactions, rich search, or gen AI. The world's most popular document database."
           />
           <TodoList
             rootClass="bg-gradient-to-bl from-white to-green-100 dark:from-gray-950 dark:to-green-950"
-            icon={<Bed className="w-10 h-10 text-red-500" />}
-            title="Sleep"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, iure aspernatur commodi perspiciatis cumque chinooooo ad!"
+            img={nodeSvg}
+            title="Node Js"
+            desc="Node.js® is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, tools and scripts."
           />
           <TodoList
             rootClass="bg-gradient-to-tr from-white to-sky-200 dark:from-gray-950 dark:to-sky-950"
-            icon={<Coffee className="w-10 h-10 text-amber-600" />}
-            title="Drink Coffee"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, iure aspernatur commodi perspiciatis cumque chinooooo ad!"
+            img={reactSvg}
+            title="React"
+            desc="With React, you can be a web and a native developer. Your team can ship to many platforms without sacrificing the user experience."
           />
           <TodoList
             rootClass="bg-gradient-to-tl from-white to-amber-100 dark:from-gray-950 dark:to-amber-950"
-            icon={<GraduationCap className="w-10 h-10" />}
-            title="Study"
-            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, iure aspernatur commodi perspiciatis cumque chinooooo ad!"
+            img={expressSvg}
+            imgStyle="dark:bg-white dark:p-1 dark:rounded-sm"
+            title="Express"
+            desc="Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications."
           />
         </div>
       </section>

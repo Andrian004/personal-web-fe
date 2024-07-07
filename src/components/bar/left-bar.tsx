@@ -11,6 +11,7 @@ import {
   Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface LeftBarProps {
   rootStyle?: string;
@@ -38,25 +39,39 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
         </h2>
       </div>
       <div className="flex justify-center gap-x-2">
-        <Button variant="secondary" size="icon">
+        <Link
+          to="https://github.com/Andrian004/"
+          target="_blank"
+          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
           <Github className="w-5 h-5" />
-        </Button>
-        <Button variant="secondary" size="icon">
+        </Link>
+        <Link
+          to="https://www.linkedin.com/in/andri-adhi-nugroho-44934a285/"
+          target="_blank"
+          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
           <Linkedin className="w-5 h-5 text-sky-700" />
-        </Button>
-        <Button variant="secondary" size="icon">
+        </Link>
+        <Link
+          to="/"
+          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
           <Instagram className="w-5 h-5 text-pink-700" />
-        </Button>
-        <Button variant="secondary" size="icon">
+        </Link>
+        <Link
+          to="/"
+          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
           <Youtube className="w-5 h-5 text-red-600" />
-        </Button>
+        </Link>
       </div>
       <div className="w-full divide-y divide-white bg-neutral-400/30 dark:bg-gray-950/30 px-2 rounded-xl">
         <div className="py-2">
           <ContactCard
             logo={<Phone className="w-5 h-5" />}
             title="Phone"
-            desc="+6283531175547"
+            desc="+987654321098"
             iconStyle="text-green-500"
           />
         </div>
@@ -72,7 +87,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <ContactCard
             logo={<MapPin className="w-5 h-5" />}
             title="Address"
-            desc="Bandung, ID"
+            desc="Yogyakarta, ID"
             iconStyle="text-rose-600"
           />
         </div>

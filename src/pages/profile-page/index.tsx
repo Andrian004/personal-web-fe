@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PencilLine, UserRound } from "lucide-react";
+import { PencilLine, UserRound, X } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import AngrySvg from "@/assets/angry.svg";
 import CoolSvg from "@/assets/cool.svg";
@@ -10,11 +10,43 @@ import { SignupDialog } from "@/components/dialog/signup-dialog";
 import { LoginDialog } from "@/components/dialog/login-dialog";
 import { CustomAvatar } from "@/components/custom-avatar";
 import { AvatarDialog } from "@/components/dialog/avatar-dialog";
+import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { patchApi } from "@/lib/fetcher";
+import { toast } from "sonner";
+import { ChangePasswordDialog } from "@/components/dialog/change-pass-dialog";
 
 export default function ProfilePage() {
-  const { user, removeToken } = useAuth();
-  const [signupState, setSignupState] = useState(false);
-  const [loginState, setLoginState] = useState(false);
+  const { user, token, removeToken, refreshToken, invalidateAuth } = useAuth();
+  const [signupState, setSignupState] = useState<boolean>(false);
+  const [loginState, setLoginState] = useState<boolean>(false);
+  const [editName, setEditName] = useState<boolean>(false);
+  const [newName, setNewName] = useState<string>("");
+
+  const nameMutation = useMutation({
+    mutationFn: (formData: { username: string }) =>
+      patchApi(`/user/${user?._id}`, formData, token),
+    onSuccess: (data) => {
+      invalidateAuth();
+      setEditName(false);
+      setNewName("");
+      toast.success(data.message);
+    },
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        refreshToken();
+      } else {
+        toast.error(error.message);
+      }
+    },
+  });
+
+  const handleEditName = () => {
+    if (!user) return;
+    if (newName.length < 3) return;
+    if (newName === user.username) return;
+    nameMutation.mutate({ username: newName });
+  };
 
   const closeSignupModal = () => setSignupState(false);
   const closeLoginModal = () => setLoginState(false);
@@ -29,7 +61,7 @@ export default function ProfilePage() {
           <div className="w-max h-max relative bg-gradient-to-b from-neutral-300 dark:from-neutral-600 to-sky-300 dark:to-sky-900 rounded-full p-2">
             {user ? (
               <CustomAvatar
-                src=""
+                src={user.avatar.imgUrl}
                 fallback={user.username.charAt(0)}
                 className="size-16"
                 fallbackStyle="bg-transparent text-4xl"
@@ -49,9 +81,27 @@ export default function ProfilePage() {
             </AvatarDialog>
           </div>
           <div className="w-full sm:space-y-2">
-            <h1 className="text-2xl font-bold">
-              {user ? user.username : "Guest"}
-            </h1>
+            {editName ? (
+              <div className="flex items-center gap-x-2">
+                <Input
+                  placeholder="username"
+                  defaultValue={user?.username}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="text-md focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+                <Button
+                  variant="ghost"
+                  size="min"
+                  onClick={() => setEditName(false)}
+                >
+                  <X />
+                </Button>
+              </div>
+            ) : (
+              <h1 className="text-2xl font-bold">
+                {user ? user.username : "Guest"}
+              </h1>
+            )}
             <h2 className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-400">
               This is just public username. You can{" "}
               <span className="text-sky-600 underline cursor-pointer">
@@ -62,26 +112,40 @@ export default function ProfilePage() {
           </div>
         </div>
         <div className="space-y-2">
-          <Button
-            variant="gray"
-            size="sm"
-            disabled={user ? false : true}
-            className="w-full"
-          >
-            <p>
-              Edit <span className="hidden sm:inline">name</span>
-            </p>
-          </Button>
-          <Button
-            variant="gray"
-            size="sm"
-            disabled={user ? false : true}
-            className="w-full"
-          >
-            <p>
-              <span className="hidden sm:inline">Change</span> Pass
-            </p>
-          </Button>
+          {editName ? (
+            <Button
+              variant="gray"
+              size="sm"
+              className="w-full"
+              onClick={handleEditName}
+            >
+              Save
+            </Button>
+          ) : (
+            <Button
+              variant="gray"
+              size="sm"
+              disabled={user ? false : true}
+              className="w-full"
+              onClick={() => setEditName(true)}
+            >
+              <p>
+                Edit <span className="hidden sm:inline">name</span>
+              </p>
+            </Button>
+          )}
+          <ChangePasswordDialog>
+            <Button
+              variant="gray"
+              size="sm"
+              disabled={user ? false : true}
+              className="w-full"
+            >
+              <p>
+                <span className="hidden sm:inline">Change</span> Pass
+              </p>
+            </Button>
+          </ChangePasswordDialog>
         </div>
       </section>
       <section className="w-full flex flex-col justify-center items-center space-y-4 pt-6">

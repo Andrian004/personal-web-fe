@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
-import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 import { deleteApi, postApi } from "@/lib/fetcher";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
 import { AdditionalLikeData } from "@/types";
+import { ShareDialog } from "@/components/dialog/share-dialog";
 
 interface ProjectCardProps {
   projectId: string;
@@ -40,6 +42,7 @@ export function ProjectCard({
   liked,
   desc,
 }: ProjectCardProps) {
+  const { refreshToken } = useAuth();
   const navigate = useNavigate();
   const [onHover, setOnHover] = useState(false);
   const [totalLikes, setTotalLikes] = useState<number>(likes);
@@ -52,7 +55,10 @@ export function ProjectCard({
       setIsLiked(true);
       setTotalLikes(totalLikes + 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const deleteMutation = useMutation({
@@ -62,7 +68,10 @@ export function ProjectCard({
       setIsLiked(false);
       setTotalLikes(totalLikes - 1);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      if (error.message === "jwt expired") refreshToken();
+      toast.error("Something went wrong");
+    },
   });
 
   const handleLike = () => {
@@ -72,15 +81,6 @@ export function ProjectCard({
       return postMutation.mutate({ pid: projectId, uid: userId });
     }
     return deleteMutation.mutate({ pid: projectId, uid: userId });
-  };
-
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      toast.success("Link has been copied");
-    } catch (error) {
-      toast.error("Failed to copy link");
-    }
   };
 
   return (
@@ -104,14 +104,15 @@ export function ProjectCard({
       </div>
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">
-          <Button
-            variant="ghost"
-            size="xs"
-            className="bg-transparent hover:bg-transparent hover:text-sky-500"
-            onClick={handleCopyLink}
-          >
-            <Share2 className="w-5 h-5 mr-1" />
-          </Button>
+          <ShareDialog defaultLink={link}>
+            <Button
+              variant="ghost"
+              size="xs"
+              className="bg-transparent hover:bg-transparent hover:text-sky-500"
+            >
+              <Share2 className="w-5 h-5 mr-1" />
+            </Button>
+          </ShareDialog>
           <Button
             variant="ghost"
             size="xs"

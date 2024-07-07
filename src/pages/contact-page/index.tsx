@@ -10,6 +10,7 @@ import { Header } from "@/components/header";
 import { FormInput } from "@/components/form/form-input";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function ContactPage() {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ export default function ContactPage() {
   useEffect(() => {
     if (user) {
       contactForm.setValue("name", user.username);
+      contactForm.setValue("email", user.email);
     } else {
       contactForm.setValue("name", "");
     }
@@ -33,6 +35,7 @@ export default function ContactPage() {
 
   const onSubmit = (data: z.infer<typeof contactSchema>) => {
     console.log(data);
+    toast.info("I'm sorry this feature is not available for now!");
   };
 
   return (
