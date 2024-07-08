@@ -34,8 +34,8 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex items-center justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-2 sm:p-4 space-y-5">
+      <section className="w-full flex items-center justify-between gap-x-4 border-b-2 border-sky-400 px-2 sm:px-0 pb-3">
         <SearchHeader title="Projects" onSearchSubmit={handleSearchSubmit} />
       </section>
       <section className="w-full flex flex-row-reverse flex-wrap-reverse items-center gap-x-2">

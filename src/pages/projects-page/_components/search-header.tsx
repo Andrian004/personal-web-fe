@@ -1,9 +1,13 @@
 import { FormEvent, useState } from "react";
-import { Search, AlignLeft, EllipsisVertical } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, AlignLeft, EllipsisVertical, UserRound } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+
 import { ProfileDialog } from "@/components/dialog/profile-dialog";
 import { NavDialog } from "@/components/dialog/nav-dialog";
 import { Button } from "@/components/ui/button";
 import { SearchDialog } from "@/components/dialog/search-dialog";
+import { CustomAvatar } from "@/components/custom-avatar";
 
 interface SearchHeaderProps {
   title: string;
@@ -11,6 +15,7 @@ interface SearchHeaderProps {
 }
 
 export function SearchHeader({ title, onSearchSubmit }: SearchHeaderProps) {
+  const { user } = useAuth();
   const [searchValue, setSearchValue] = useState("");
   return (
     <>
@@ -20,7 +25,7 @@ export function SearchHeader({ title, onSearchSubmit }: SearchHeaderProps) {
         </ProfileDialog>
         <h1 className="text-2xl font-medium">{title}</h1>
       </div>
-      <div className="flex gap-x-2 sm:gap-x-3 md:gap-x-0">
+      <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-0">
         <form
           onSubmit={(e) => onSearchSubmit(searchValue, e)}
           className="hidden sm:flex items-center bg-white dark:bg-gray-900 rounded-2xl h-8"
@@ -43,6 +48,18 @@ export function SearchHeader({ title, onSearchSubmit }: SearchHeaderProps) {
         <SearchDialog onSearchSubmit={onSearchSubmit}>
           <Search />
         </SearchDialog>
+        <Link to={"/account"} className="md:hidden">
+          {user ? (
+            <CustomAvatar
+              src={user.avatar.imgUrl}
+              fallback={user.username.charAt(0)}
+              className="size-7"
+              fallbackStyle="bg-neutral-600 text-4xl font-bold"
+            />
+          ) : (
+            <UserRound className="size-6" />
+          )}
+        </Link>
         <NavDialog triggerStyle="md:hidden">
           <EllipsisVertical />
         </NavDialog>

@@ -52,8 +52,8 @@ export default function ProfilePage() {
   const closeLoginModal = () => setLoginState(false);
 
   return (
-    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-2 sm:p-4 space-y-5">
+      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 px-2 sm:px-0 pb-3">
         <Header title="Account" />
       </section>
       <section className="flex justify-between bg-white/80 dark:bg-gray-800/70 shadow shadow-gray-400 dark:shadow-black rounded-lg p-3 gap-x-2">

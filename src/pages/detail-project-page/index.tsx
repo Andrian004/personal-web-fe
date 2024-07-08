@@ -83,7 +83,7 @@ export default function DetailProjectPage() {
   }
 
   return (
-    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-2 sm:p-4 space-y-5">
       {isLoading || data === undefined ? (
         <Loader />
       ) : (

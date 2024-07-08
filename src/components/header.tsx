@@ -29,7 +29,7 @@ export function Header({ title }: HeaderProps) {
               fallbackStyle="bg-neutral-600 text-4xl font-bold"
             />
           ) : (
-            <UserRound className="size-7" />
+            <UserRound className="size-6" />
           )}
         </Link>
         <NavDialog triggerStyle="md:hidden">

@@ -39,8 +39,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-4 space-y-5">
-      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 pb-3">
+    <div className="w-full bg-white/70 dark:bg-white/25 backdrop-blur-lg rounded-2xl p-2 sm:p-4 space-y-5">
+      <section className="w-full flex justify-between gap-x-4 border-b-2 border-sky-400 px-2 sm:px-0 pb-3">
         <Header title="Contact Me" />
       </section>
       <section className="bg-white dark:bg-gray-800 p-2 md:p-5 xl:p-10 rounded-md space-y-10">
