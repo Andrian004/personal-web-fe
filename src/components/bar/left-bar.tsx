@@ -79,7 +79,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <ContactCard
             logo={<Mail className="w-5 h-5" />}
             title="Email"
-            desc="barbarcode@gmail.com"
+            desc="justexample@email.xyz"
             iconStyle="text-indigo-500"
           />
         </div>
