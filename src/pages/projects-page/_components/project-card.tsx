@@ -93,14 +93,16 @@ export function ProjectCard({
       onMouseLeave={() => setOnHover(false)}
     >
       <div className="box-border overflow-hidden rounded-sm border border-sky-200 dark:border-sky-950">
-        <img
-          src={image}
-          alt="nugas"
-          className={cn(
-            "w-full aspect-video rounded-sm duration-200",
-            onHover && "scale-125"
-          )}
-        />
+        <Link to={`/project/${projectId}`}>
+          <img
+            src={image}
+            alt="nugas"
+            className={cn(
+              "w-full aspect-video rounded-sm duration-200",
+              onHover && "scale-125"
+            )}
+          />
+        </Link>
       </div>
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">

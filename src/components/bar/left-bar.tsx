@@ -5,13 +5,14 @@ import {
   Linkedin,
   Instagram,
   Youtube,
-  Phone,
   Mail,
   MapPin,
   Languages,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { RequestCVButton } from "@/components/ui/request-cv-btn";
+import IconTiktok from "@/components/icons/tiktok";
 
 interface LeftBarProps {
   rootStyle?: string;
@@ -33,19 +34,12 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
       )}
     >
       <div className="text-center">
-        <h1 className="text-2xl font-semibold">Andrian004</h1>
+        <h1 className="text-2xl font-semibold">Andri A N</h1>
         <h2 className="text-md font-medium text-neutral-700 dark:text-neutral-300">
           Web Developer
         </h2>
       </div>
       <div className="flex justify-center gap-x-2">
-        <Link
-          to="https://github.com/Andrian004/"
-          target="_blank"
-          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-        >
-          <Github className="w-5 h-5" />
-        </Link>
         <Link
           to="https://www.linkedin.com/in/andri-adhi-nugroho-44934a285/"
           target="_blank"
@@ -54,13 +48,19 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           <Linkedin className="w-5 h-5 text-sky-700" />
         </Link>
         <Link
-          to="/"
+          to="https://www.instagram.com/aan_aja45"
           className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
         >
           <Instagram className="w-5 h-5 text-pink-700" />
         </Link>
         <Link
-          to="/"
+          to="https://www.tiktok.com/@barbar_preneur"
+          className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
+          <IconTiktok className="w-5 h-5 text-white" />
+        </Link>
+        <Link
+          to="https://www.youtube.com/@BarBarPreneur"
           className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
         >
           <Youtube className="w-5 h-5 text-red-600" />
@@ -69,17 +69,17 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
       <div className="w-full divide-y divide-white bg-neutral-400/30 dark:bg-gray-950/30 px-2 rounded-xl">
         <div className="py-2">
           <ContactCard
-            logo={<Phone className="w-5 h-5" />}
-            title="Phone"
-            desc="+987654321098"
-            iconStyle="text-green-500"
+            logo={<Github className="w-5 h-5" />}
+            title="Github"
+            desc="github.com/Andrian004"
+            iconStyle="text-white"
           />
         </div>
         <div className="py-2">
           <ContactCard
             logo={<Mail className="w-5 h-5" />}
             title="Email"
-            desc="justexample@email.xyz"
+            desc="andriadinugroho6@gmail.com"
             iconStyle="text-indigo-500"
           />
         </div>
@@ -100,9 +100,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           />
         </div>
       </div>
-      <Button className="bg-sky-700 dark:bg-gray-900 dark:text-white">
-        Download CV
-      </Button>
+      <RequestCVButton />
     </div>
   );
 }

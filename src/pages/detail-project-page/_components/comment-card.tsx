@@ -55,7 +55,7 @@ export function CommentCard({ commentData }: CommentCardProps) {
     <div className="w-full flex gap-x-2">
       <CustomAvatar
         src={sender.avatar.imgUrl}
-        fallback={sender.username.charAt(0)}
+        fallback={sender.username.charAt(0).toUpperCase()}
         className="size-8 sm:size-10"
       />
       <div className="w-full space-y-1">

@@ -103,7 +103,7 @@ export default function DetailProjectPage() {
             <div className="flex justify-between flex-wrap gap-2">
               <div className="flex gap-x-2 justify-start items-center">
                 <CustomAvatar
-                  src="https://res.cloudinary.com/de39dewcq/image/upload/v1719237502/projects/cbbgbfhcg6ixvqp2pbln.png"
+                  src="https://res.cloudinary.com/de39dewcq/image/upload/v1722004894/projects/znhh8baqykgekilze1h7.png"
                   fallback="A"
                 />
                 <div>

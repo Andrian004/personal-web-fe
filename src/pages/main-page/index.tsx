@@ -21,7 +21,7 @@ export default function MainPage() {
           open to discuss about project or partnerships. So you can contact me
           anytime{" "}
           <span className="text-sky-500 underline">
-            ( Just kidding, don't contact me please🙏 )
+            ( Just kidding, please contact me only during working hours.🙏 )
           </span>
           .
         </p>
