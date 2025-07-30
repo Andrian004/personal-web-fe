@@ -57,7 +57,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
           to="https://www.tiktok.com/@barbar_preneur"
           className="h-10 w-10 bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
         >
-          <IconTiktok className="w-5 h-5 text-white" />
+          <IconTiktok className="w-5 h-5 text-black dark:text-white" />
         </Link>
         <Link
           to="https://www.youtube.com/@BarBarPreneur"
@@ -72,7 +72,7 @@ export function LeftBar({ rootStyle }: LeftBarProps) {
             logo={<Github className="w-5 h-5" />}
             title="Github"
             desc="github.com/Andrian004"
-            iconStyle="text-white"
+            iconStyle="text-black dark:text-white"
           />
         </div>
         <div className="py-2">
