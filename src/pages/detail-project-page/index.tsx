@@ -6,6 +6,7 @@ import { deleteApi, getApi, postApi } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import Youtube from "react-youtube";
 
 import { CustomAvatar } from "@/components/custom-avatar";
 import { CustomBreadcrumb } from "@/components/custom-breadcrumb";
@@ -92,11 +93,18 @@ export default function DetailProjectPage() {
             <CustomBreadcrumb title={data.body.title} />
           </section>
           <section className="bg-white dark:bg-gray-800 p-2 rounded-md space-y-3">
-            <img
-              src={data.body.image.imgUrl}
-              alt="image"
-              className="aspect-video rounded-sm border border-sky-200 dark:border-sky-950"
-            />
+            {data.body.videoId ? (
+              <Youtube
+                videoId={data.body.videoId}
+                iframeClassName="rounded-sm aspect-video"
+              />
+            ) : (
+              <img
+                src={data.body.image.imgUrl}
+                alt="image"
+                className="aspect-video rounded-sm border border-sky-200 dark:border-sky-950"
+              />
+            )}
             <h1 className="text-xl lg:text-2xl text-neutral-700 dark:text-neutral-300 truncate">
               {data.body.title}
             </h1>

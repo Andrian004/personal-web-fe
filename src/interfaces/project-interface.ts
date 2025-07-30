@@ -9,6 +9,7 @@ export interface Project {
   liked: boolean;
   title: string;
   image: Image;
+  videoId: string;
   description: string;
   totalComments: number;
   totalLikes: number;
