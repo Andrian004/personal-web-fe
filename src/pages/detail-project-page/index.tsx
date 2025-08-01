@@ -137,7 +137,10 @@ export default function DetailProjectPage() {
                   />
                   {totalLikes}
                 </Button>
-                <ShareDialog defaultLink={data.body.url}>
+                <ShareDialog
+                  defaultLink={data.body.url}
+                  title={data.body.title}
+                >
                   <Button
                     variant="gray"
                     size="roundSm"

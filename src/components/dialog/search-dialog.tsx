@@ -25,7 +25,7 @@ interface SearchDialogProps {
 const suggestions: string[] = [
   "Nugas",
   "Skuynime",
-  "Nasa Class",
+  "Codetube",
   "Google Converter",
 ];
 

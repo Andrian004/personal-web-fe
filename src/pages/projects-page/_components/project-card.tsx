@@ -106,7 +106,7 @@ export function ProjectCard({
       </div>
       <div className="space-y-2">
         <div className="flex flex-row-reverse gap-x-2">
-          <ShareDialog defaultLink={link}>
+          <ShareDialog defaultLink={link} title={title}>
             <Button
               variant="ghost"
               size="xs"
